@@ -1,0 +1,223 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service permissionService {
+    rpc createPermission(createPermissionRequest) returns(permissionResponse) {}
+    rpc updatePermission(updatePermissionRequest) returns(permissionResponse) {}
+    rpc updatePermissionStatus(updatePermissionStatusRequest) returns(permissionResponse) {}
+    rpc fetchPermissionById(fetchPermissionByIdRequest) returns(permissionResponse) {}
+    rpc fetchPermissionByCode(fetchPermissionByCodeRequest) returns(permissionResponse) {}
+    rpc fetchPermissions(fetchPermissionsRequest) returns(permissionsResponse) {}
+    rpc createPermissionGroup(createPermissionGroupRequest) returns(permissionGroupResponse) {}
+    rpc updatePermissionGroup(updatePermissionGroupRequest) returns(permissionGroupResponse) {}
+    rpc updatePermissionGroupStatus(updatePermissionGroupStatusRequest) returns(permissionGroupResponse) {}
+    rpc fetchPermissionGroupById(fetchPermissionGroupByIdRequest) returns(permissionGroupResponse) {}
+    rpc fetchPermissionGroups(fetchPermissionGroupsRequest) returns(permissionGroupsResponse) {}
+    rpc createEntityPermissionGroup(createEntityPermissionGroupRequest) returns(entityPermissionGroupResponse) {}
+    rpc updateEntityPermissionGroup(updateEntityPermissionGroupRequest) returns(entityPermissionGroupResponse) {}
+    rpc updateEntityPermissionGroupStatus(updateEntityPermissionGroupStatusRequest) returns(entityPermissionGroupResponse) {}
+    rpc fetchEntityPermissionGroupById(fetchEntityPermissionGroupByIdRequest) returns(entityPermissionGroupResponse) {}
+    rpc fetchEntityPermissionGroupByName(fetchEntityPermissionGroupByNameRequest) returns(entityPermissionGroupResponse) {}
+    rpc fetchEntityPermissionGroups(fetchEntityPermissionGroupsRequest) returns(entityPermissionGroupsResponse) {}
+}
+
+message permission {
+    string _id = 1;
+    string code = 2;
+    string name = 3;
+    string description = 4;
+    permissionGroup group = 5;
+    bool isActive = 6;
+    string createdAt = 7;
+    string updatedAt = 8;
+}
+
+message createPermissionRequest {
+    string code = 1;
+    string name = 2;
+    string description = 3;
+    string group = 4;
+}
+
+message updatePermissionRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string code = 3;
+    string name = 4;
+    string description = 5;
+    string group = 6;
+}
+
+message updatePermissionStatusRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    bool isActive = 3;
+}
+
+message fetchPermissionByIdRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchPermissionByCodeRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchPermissionsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message permissionResponse {
+    permission data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message permissionsResponse {
+    repeated permission data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message permissionGroup {
+    string _id = 1;
+    string name = 2;
+    string description = 3;
+    bool isActive = 4;
+    string createdAt = 5;
+    string updatedAt = 6;
+}
+
+message createPermissionGroupRequest {
+    string name = 2;
+    string description = 3;
+}
+
+message updatePermissionGroupRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string name = 3;
+    string description = 4;
+}
+
+message updatePermissionGroupStatusRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    bool isActive = 3;
+}
+
+message fetchPermissionGroupByIdRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchPermissionGroupsRequest {
+
+}
+
+message permissionGroupResponse {
+    permissionGroup data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message permissionGroupsResponse {
+    repeated permissionGroup data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+
+message entityPermissionGroup {
+    message permissionGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message permissionData {
+        string _id = 1;
+        string code = 2;
+        string name = 3;
+        string description = 4;
+        permissionGroupData group = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+    }
+
+    message relationshipPermissionData {
+        string relationship = 1;
+        repeated permissionData permissions = 2;
+    }
+
+    string _id = 1;
+    string name = 2;
+    string description = 3;
+    bool isActive = 4;
+    repeated permissionData grantPermissions = 5;
+    repeated permissionData revokePermissions = 6;
+    repeated relationshipPermissionData relationshipPermissions = 7;
+    string createdAt = 8;
+    string updatedAt = 9;
+}
+
+message entityPermissionGroupResponse {
+    entityPermissionGroup data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message entityPermissionGroupsResponse {
+    repeated entityPermissionGroup data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message relationshipPermissionDataRequest {
+    string relationship = 1;
+    repeated string permissions = 2;
+}
+message createEntityPermissionGroupRequest {
+    string name = 1;
+    string description = 2;
+    repeated string grantPermissions = 4;
+    repeated string revokePermissions = 5;
+    repeated relationshipPermissionDataRequest relationshipPermissions = 6;
+}
+
+message updateEntityPermissionGroupRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string name = 3;
+    string description = 4;
+    repeated string grantPermissions = 5;
+    repeated string revokePermissions = 6;
+    repeated relationshipPermissionDataRequest relationshipPermissions = 7;
+}
+
+message updateEntityPermissionGroupStatusRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    bool isActive = 3;
+}
+
+message fetchEntityPermissionGroupByIdRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchEntityPermissionGroupByNameRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchEntityPermissionGroupsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}

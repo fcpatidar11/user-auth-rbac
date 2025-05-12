@@ -1,0 +1,141 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service roleService {
+    rpc createRole(createRoleRequest) returns(roleResponse) {}
+    rpc updateRole(updateRoleRequest) returns(roleResponse) {}
+    rpc updateRoleStatus(updateRoleStatusRequest) returns(roleResponse) {}
+    rpc fetchRoleById(fetchRoleByIdRequest) returns(roleResponse) {}
+    rpc fetchRoles(fetchRolesRequest) returns(rolesResponse) {}
+    rpc createRoleGroup(createRoleGroupRequest) returns(roleGroupResponse) {}
+    rpc updateRoleGroup(updateRoleGroupRequest) returns(roleGroupResponse) {}
+    rpc updateRoleGroupStatus(updateRoleGroupStatusRequest) returns(roleGroupResponse) {}
+    rpc fetchRoleGroupById(fetchRoleGroupByIdRequest) returns(roleGroupResponse) {}
+    rpc fetchRoleGroups(fetchRoleGroupsRequest) returns(roleGroupsResponse) {}
+}
+
+message role {
+    message permissionGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message permissionData {
+        string _id = 1;
+        string code = 2;
+        string name = 3;
+        string description = 4;
+        permissionGroupData group = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+    }
+    string _id = 1;
+    string name = 2;
+    string description = 3;
+    roleGroup group = 4;
+    bool isSystem = 5;
+    bool isActive = 6;
+    repeated permissionData permissions = 7;
+    string createdAt = 8;
+    string updatedAt = 9;
+}
+
+message roleGroup {
+    string _id = 1;
+    string name = 2;
+    string description = 3;
+    bool isActive = 4;
+    string createdAt = 5;
+    string updatedAt = 6;
+}
+
+message createRoleRequest {
+    string name = 1;
+    string description = 2;
+    string group = 3;
+    repeated string assignPermissions = 4;
+}
+
+message updateRoleRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string name = 3;
+    string description = 4;
+    string group = 5;
+    repeated string assignPermissions = 6;
+    repeated string removePermissions = 7;
+}
+
+message updateRoleStatusRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    bool isActive = 3;
+}
+
+message fetchRoleByIdRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchRolesRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+
+message createRoleGroupRequest {
+    string name = 1;
+    string description = 2;
+}
+
+message updateRoleGroupRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string name = 3;
+    string description = 4;
+}
+
+message updateRoleGroupStatusRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    bool isActive = 3;
+}
+
+message fetchRoleGroupByIdRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchRoleGroupsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message roleResponse {
+    role data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message rolesResponse {
+    repeated role data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message roleGroupResponse {
+    roleGroup data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message roleGroupsResponse {
+    repeated roleGroup data = 1;
+    string details = 2;
+    int32 code = 3;
+}

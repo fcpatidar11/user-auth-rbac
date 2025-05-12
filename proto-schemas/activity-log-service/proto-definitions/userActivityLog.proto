@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package activityLogPackage;
+
+service userActivityLogService {
+  rpc batchTrackActivityLogs(BatchActivityLogsRequest) returns (BatchActivityLogsResponse) {}
+  rpc fetchUserActivityLogs(FetchActivityLogsRequest) returns (FetchActivityLogsResponse) {}
+}
+
+message ActivityLogRequest {
+  string performedBy = 1;
+  string performedFor = 2;
+  string actionType = 3;
+  string moduleType = 4;
+  string deviceType = 5;
+  string ipAddress = 6;
+  string userAgent = 7;
+  string metadata = 8;
+  string entityId = 9;
+  string entityType = 10;
+  string loggedAt = 11;
+  string requestDetails = 12;
+  string previousData = 13;
+  string newData = 14;
+  string remarks = 15;
+}
+
+message BatchActivityLogsRequest {
+  repeated ActivityLogRequest activities = 1;
+}
+
+message BatchActivityLogsResponse {
+  message ActivityLogResponse {
+    string _id = 1;
+    string performedBy = 2;
+    string performedFor = 3;
+    string actionType = 4;
+    string moduleType = 5;
+    string deviceType = 6;
+    string ipAddress = 7;
+    string userAgent = 8;
+    string metadata = 9;
+    string entityId = 10;
+    string entityType = 11;
+    string loggedAt = 12;
+    string requestDetails = 13;
+    string previousData = 14;
+    string newData = 15;
+    string remarks = 16;
+    string createdAt = 17;
+    string updatedAt = 18;
+  }
+  repeated ActivityLogResponse data = 1;
+  string details = 2;
+  int32 code = 3;
+}
+
+message FetchActivityLogsRequest {
+  string performedBy = 1;
+  string performedFor = 2;
+  string actionType = 3;
+  string moduleType = 4;
+  string deviceType = 5;
+  string ipAddress = 6;
+  string entityId = 7;
+  string entityType = 8;
+  int32 page = 9;
+  int32 limit = 10;
+}
+
+message FetchActivityLogsResponse {
+  message ActivityLogData {
+    string _id = 1;
+    string performedBy = 2;
+    string performedFor = 3;
+    string actionType = 4;
+    string moduleType = 5;
+    string deviceType = 6;
+    string ipAddress = 7;
+    string userAgent = 8;
+    string metadata = 9;
+    string entityId = 10;
+    string entityType = 11;
+    string loggedAt = 12;
+    string requestDetails = 13;
+    string previousData = 14;
+    string newData = 15;
+    string remarks = 16;
+    string createdAt = 17;
+    string updatedAt = 18;
+  }
+  message PaginationData {
+    int32 totalDocs = 1;
+    int32 limit = 2;
+    int32 page = 3;
+    int32 totalPages = 4;
+    int32 nextPage = 5;
+    int32 prevPage = 6;
+    bool hasPrevPage = 7;
+    bool hasNextPage = 8;
+  }
+  repeated ActivityLogData data = 1;
+  PaginationData pagination = 2;
+  string details = 3;
+  int32 code = 4;
+}

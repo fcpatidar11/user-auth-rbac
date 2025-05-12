@@ -1,0 +1,33 @@
+name: Deploy
+run-name: "Deploying to env ${{ github.event.inputs.environment }} from ${{ github.ref_name }}"
+on:
+  workflow_dispatch:
+    inputs:
+        environment:
+            description: 'Choose Environment'
+            default: 'dev'
+            required: true
+            type: choice
+            options:
+            - dev
+            - prod
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/encoreskydev-captive-api/htdocs/captive-api.encoreskydev.com/captive-backend
+            git pull --rebase
+            npm run delete:dev
+            npm run start:dev
+          EOF

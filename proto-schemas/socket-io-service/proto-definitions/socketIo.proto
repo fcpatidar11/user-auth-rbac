@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package socketIoPkg;
+
+service socketIoService {
+  rpc sendSocketIoMessages(SendSocketIoMessagesRequest) returns (SendSocketIoMessagesResponse) {}
+}
+
+message TargetMessage {
+  string userId = 1;
+  repeated string targetDevices = 2;
+  string event = 3;
+  string data = 4;
+}
+
+message SendSocketIoMessagesRequest {
+  repeated TargetMessage targetMessages = 1;
+}
+
+message SendSocketIoMessagesResponse {
+  bool data = 1;
+  string details = 2;
+  int32 code = 3;
+}
+
+
+

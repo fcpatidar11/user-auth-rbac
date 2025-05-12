@@ -1,0 +1,79 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@lib/*": [
+                "lib/*"
+            ],
+            "@docs/*": [
+                "docs/*"
+            ],
+            "@database/*": [
+                "lib/database/*"
+            ],
+            "@mailer/*": [
+                "lib/mailer-lib/*"
+            ],
+            "@shared/*": [
+                "shared/*"
+            ],
+            "@configs/*": [
+                "shared/configs/*"
+            ],
+            "@constants/*": [
+                "shared/constants/*"
+            ],
+            "@messages/*": [
+                "shared/messages/*"
+            ],
+            "@utils/*": [
+                "shared/utils/*"
+            ],
+            "@loggers/*": [
+                "shared/utils/loggers/*"
+            ],
+            "@templates/*": [
+                "shared/utils/templates/*"
+            ],
+            "@src/*": [
+                "src/*"
+            ],
+            "@api/*": [
+                "src/api/*"
+            ],
+            "@controllers/*": [
+                "src/api/controllers/*"
+            ],
+            "@middlewares/*": [
+                "src/api/middlewares/*"
+            ],
+            "@routes/*": [
+                "src/api/routes/*"
+            ],
+            "@interceptors/*": [
+                "src/grpc/interceptors/*"
+            ],
+            "@grpcDir/*": [
+                "src/grpc/*"
+            ],
+            "@services/*": [
+                "src/grpc/services/*"
+            ],
+            "@models/*": [
+                "src/grpc/models/*"
+            ],
+            "@helpers/*": [
+                "src/grpc/helpers/*"
+            ],
+            "@connectors/*": [
+                "src/grpc/connectors/*"
+            ],
+            "@formatters/*": [
+                "src/formatters/*"
+            ],
+            "@migrations/*": [
+                "src/migrations/*"
+            ]
+        }
+    }
+}

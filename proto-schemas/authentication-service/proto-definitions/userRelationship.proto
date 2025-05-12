@@ -1,0 +1,84 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service userRelationshipService {
+    rpc addUserRelationship(addUserRelationshipRequest) returns(userRelationshipResponse) {}
+    rpc fetchUserRelationship(fetchUserRelationshipRequest) returns(userRelationshipResponse) {}
+    rpc removeUserRelationship(removeUserRelationshipRequest) returns(removeUserRelationshipResponse) {}
+    rpc updateUserRelationshipPermissions(updateUserRelationshipPermissionRequest) returns(userRelationshipResponse) {}
+}
+
+message userRelationshipInfo {
+    string _id = 1;
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+    string userName = 5;
+    string email = 6;
+    bool isEmailVerified = 7;
+    bool isActive = 8;
+    string gender = 9;
+    string createdAt = 10;
+    string updatedAt = 11;
+}
+
+message addUserRelationshipRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    repeated string assignPermissions = 3;
+}
+
+message fetchUserRelationshipRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message updateUserRelationshipPermissionRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    repeated string assignPermissions = 3;
+    repeated string removePermissions = 4;
+}
+
+message removeUserRelationshipRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message userRelationship {
+    message relationshipPermissionGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message relationshipPermission {
+        string _id = 1;
+        string code = 2;
+        string name = 3;
+        string description = 4;
+        relationshipPermissionGroupData group = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+    }
+
+    userRelationshipInfo parentUser = 1;
+    userRelationshipInfo childUser = 2;
+    repeated relationshipPermission permissions = 3;
+}
+
+message userRelationshipResponse {
+    userRelationship data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message removeUserRelationshipResponse {
+    bool data = 1;
+    string details = 2;
+    int32 code = 3;
+}

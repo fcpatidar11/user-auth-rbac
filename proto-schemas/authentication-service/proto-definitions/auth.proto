@@ -1,0 +1,205 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service authService {
+    rpc acceptUserInvitation(acceptUserInvitationRequest) returns(fetchUserInvitationResponse) {}
+    rpc fetchUserInvitation(fetchUserInvitationRequest) returns(fetchUserInvitationResponse) {}
+    rpc login(loginRequest) returns(loginResponse) {}
+    rpc forgotPassword(forgotPasswordRequest) returns(forgotPasswordResponse) {}
+    rpc resetPassword(resetPasswordRequest) returns(resetPasswordResponse) {}
+    rpc fetchDashboardOverview(fetchDashboardOverviewRequest) returns(fetchDashboardOverviewResponse) {}
+}
+
+message fetchDashboardOverviewRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message SuperAdminOverview {
+    int32 totalSuperAdmins = 1;
+    int32 totalAdmins = 2;
+    int32 totalPartners = 3;
+    int32 totalCustomers = 4;
+    int32 totalSubsidiaries = 5;
+    int32 totalRoles = 6;
+    int32 totalJobs = 7;
+    int32 totalProcessJobs = 8;
+    int32 totalCompletedJobs = 9;
+    int32 totalDraftJobs = 10;
+}
+
+message AdminOverview {
+    int32 totalAdmins = 1;
+    int32 totalPartners = 2;
+    int32 totalCustomers = 3;
+    int32 totalSubsidiaries = 4;
+    int32 totalJobs = 5;
+    int32 totalProcessJobs = 6;
+    int32 totalCompletedJobs = 7;
+    int32 totalDraftJobs = 8;
+}
+message PartnerOverview {
+    int32 totalPartners = 1;
+    int32 totalCustomers = 2;
+    int32 totalSubsidiaries = 3;
+    int32 totalJobs = 4;
+    int32 totalProcessJobs = 5;
+    int32 totalCompletedJobs = 6;
+    int32 totalDraftJobs = 7;
+}
+
+message CustomerOverview {
+    int32 totalLinkSubsidiaries = 1;
+    int32 totalJobs = 2;
+    int32 totalProcessJobs = 3;
+    int32 totalCompletedJobs = 4;
+}
+
+message SubsidiaryOverview {
+    int32 totalLinkCustomers = 1;
+}
+
+message TechnicianOverview {
+    int32 totalJobs = 1;
+    int32 totalProcessJobs = 2;
+    int32 totalCompletedJobs = 3;
+}
+
+message dashboardOverview {
+    SuperAdminOverview superAdminOverview = 1;
+    AdminOverview adminOverview = 2;
+    PartnerOverview partnerOverview = 3;
+    CustomerOverview customerOverview = 4;
+    SubsidiaryOverview subsidiaryOverview = 5;
+    TechnicianOverview technicianOverview = 56;
+}
+
+message fetchDashboardOverviewResponse {
+    dashboardOverview data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message userInvitation {
+    string _id = 1;
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+    string userName = 5;
+    string email = 6;
+    bool isEmailVerified = 7;
+    bool isActive = 8;
+    string gender = 9;
+    string createdAt = 10;
+    string updatedAt = 11;
+}
+
+message acceptUserInvitationRequest {
+    string token = 1;
+    string password = 2;
+}
+
+message fetchUserInvitationRequest {
+    string token = 1;
+}
+
+message fetchUserInvitationResponse {
+    userInvitation data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+
+message loginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message forgotPasswordRequest {
+    string email = 1;
+}
+
+message resetPasswordRequest {
+    string password = 1;
+    string token = 2;
+}
+
+message loginUser {
+    message permissionGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message permissionData {
+        string _id = 1;
+        string code = 2;
+        string name = 3;
+        string description = 4;
+        permissionGroupData group = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+    }
+    message roleGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message roleData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        roleGroupData group = 4;
+        bool isSystem = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+        repeated permissionData permissions = 9;
+    }
+    message userRelationshipData {
+        string parentUser = 2;
+        string childUser = 3;
+        repeated permissionData permissions = 9;
+    }
+    string _id = 1;
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+    string userName = 5;
+    string email = 6;
+    bool isEmailVerified = 7;
+    bool isActive = 8;
+    string gender = 10;
+    string profileImage = 11;
+    repeated permissionData grantPermissions = 12;
+    repeated roleData roles = 13;
+    repeated permissionData revokePermissions = 14;
+    string createdAt = 15;
+    string updatedAt = 16;
+}
+
+message loginResponse {
+    loginUser data = 1;
+    string token = 2;
+    string details = 3;
+    int32 code = 4;
+}
+
+message forgotPasswordResponse {
+    bool data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message resetPasswordResponse {
+    bool data = 1;
+    string details = 2;
+    int32 code = 3;
+}

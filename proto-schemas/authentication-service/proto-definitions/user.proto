@@ -1,0 +1,219 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service userService {
+    rpc createUser(createUserRequest) returns(userResponse) {}
+    rpc updateUser(updateUserRequest) returns(userResponse) {}
+    rpc updateUserStatus(updateUserStatusRequest) returns(userResponse) {}
+    rpc fetchUserById(fetchUserByIdRequest) returns(userResponse) {}
+    rpc fetchUsers(fetchUsersRequest) returns(usersResponse) {}
+    rpc resendUserInvitation(resendUserInvitationRequest) returns(userResponse) {}
+    rpc fetchUserActivityLogs(fetchActivityLogsRequest) returns(ActivityLogsResponse) {}
+    rpc updateProfilePassword(updateProfilePasswordRequest) returns(userResponse) {}
+    rpc fetchProfile(fetchProfileRequest) returns(userResponse) {}
+    rpc fetchProfileActivityLogs(fetchProfileActivityLogsRequest) returns(ActivityLogsResponse) {}
+    rpc updateProfile(updateProfileRequest) returns(userResponse) {}
+}
+
+message user {
+    message permissionGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message permissionData {
+        string _id = 1;
+        string code = 2;
+        string name = 3;
+        string description = 4;
+        permissionGroupData group = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+    }
+    message roleGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message roleData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        roleGroupData group = 4;
+        bool isSystem = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+        repeated permissionData permissions = 9;
+    }
+    message userRelationshipData {
+        string parentUser = 2;
+        string childUser = 3;
+        repeated permissionData permissions = 9;
+    }
+    string _id = 1;
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+    string userName = 5;
+    string email = 6;
+    bool isEmailVerified = 7;
+    bool isActive = 8;
+    string gender = 10;
+    string profileImage = 11;
+    repeated permissionData grantPermissions = 12;
+    repeated roleData roles = 13;
+    repeated permissionData revokePermissions = 14;
+    string createdAt = 15;
+    string updatedAt = 16;
+}
+
+message createUserRequest {
+    string firstName = 1;
+    string middleName = 2;
+    string lastName = 3;
+    string userName = 4;
+    string email = 5;
+    string gender = 9;
+    map<string, string> reqParams = 10;
+}
+
+message updateUserRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string firstName = 3;
+    string middleName = 4;
+    string lastName = 5;
+    string userName = 6;
+    string gender = 7;
+    string profileImage = 8;
+}
+
+message updateProfileRequest {
+    string firstName = 3;
+    string middleName = 4;
+    string lastName = 5;
+    string userName = 6;
+    string gender = 7;
+    string profileImage = 8; 
+}
+
+message updateUserStatusRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    bool isActive = 3;
+}
+
+message updateProfilePasswordRequest {
+    string oldPassword = 2;
+    string newPassword = 3;
+}
+
+message fetchUserByIdRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchProfileRequest {
+
+}
+
+message fetchActivityLogsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchProfileActivityLogsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchUsersRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message userResponse {
+    user data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message usersResponse {
+    message Pagination {
+        int32 totalDocs = 1;
+        int32 limit = 2;
+        int32 page = 3;
+        int32 totalPages = 4;
+        int32 nextPage = 5;
+        int32 prevPage = 6;
+        bool  hasPrevPage = 7;
+        bool  hasNextPage = 8;
+    }
+    repeated user data = 1;
+    Pagination pagination = 2;
+    string details = 3;
+    int32 code = 4;
+}
+
+message ActivityLogUser {
+    string _id = 1;
+    string firstName = 2;
+    string middleName = 3;
+    string lastName = 4;
+    string userName = 5;
+    string email = 6;
+    string gender = 7;
+    string profileImage = 8;
+}
+
+message ActivityLog {
+    string _id = 1;
+    ActivityLogUser performedBy = 2;
+    ActivityLogUser performedFor = 3;
+    string actionType = 4;
+    string moduleType = 5;
+    string deviceType = 6;
+    string ipAddress = 7;
+    string userAgent = 8;
+    string metadata = 9;
+    string entityId = 10;
+    string entityType = 11;
+    string loggedAt = 12;
+    string requestDetails = 13;
+    string previousData = 14;
+    string newData = 15;
+    string remarks = 16;
+    string createdAt = 17;
+    string updatedAt = 18;
+}
+
+message ActivityLogsResponse {
+    message Pagination {
+        int32 totalDocs = 1;
+        int32 limit = 2;
+        int32 page = 3;
+        int32 totalPages = 4;
+        int32 nextPage = 5;
+        int32 prevPage = 6;
+        bool  hasPrevPage = 7;
+        bool  hasNextPage = 8;
+    }
+    repeated ActivityLog data = 1;
+    Pagination pagination = 2;
+    string details = 3;
+    int32 code = 4;
+}
+
+message resendUserInvitationRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}

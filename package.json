@@ -1,0 +1,31 @@
+{
+  "name": "captive-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:local": "npm install && (cd authentication-service && npm run start:local) && (cd api-gateway && npm run start:local)",
+    "start:dev": "npm install && (cd authentication-service && npm run start:dev) && (cd api-gateway && npm run start:dev)",
+    "start:prod": "npm install && (cd authentication-service && npm run start:prod) && (cd api-gateway && npm run start:prod)",
+    "start:stage": "npm install && (cd authentication-service && npm run start:stage) && (cd api-gateway && npm run start:stage)",
+    "delete:local": "(cd authentication-service && npm run delete:local) && (cd api-gateway && npm run delete:local)",
+    "delete:dev": "(cd authentication-service && npm run delete:dev) && (cd api-gateway && npm run delete:dev)",
+    "delete:prod": "(cd authentication-service && npm run delete:prod) && (cd api-gateway && npm run delete:prod)",
+    "delete:stage": "(cd authentication-service && npm run delete:stage) && (cd api-gateway && npm run delete:stage)",
+    "restart:local": "npm install && (cd authentication-service && npm run restart:local) && (cd api-gateway && npm run restart:local)",
+    "restart:dev": "npm install && (cd authentication-service && npm run restart:dev) && (cd api-gateway && npm run restart:dev)",
+    "restart:prod": "npm install && (cd authentication-service && npm run restart:prod) && (cd api-gateway && npm run restart:prod)",
+    "restart:stage": "npm install && (cd authentication-service && npm run restart:stage) && (cd api-gateway && npm run restart:stage)",
+    "stop:local": "(cd authentication-service && npm run stop:local) && (cd api-gateway && npm run stop:local)",
+    "stop:dev": "(cd authentication-service && npm run stop:dev) && (cd api-gateway && npm run stop:dev)",
+    "stop:prod": "(cd authentication-service && npm run stop:prod) && (cd api-gateway && npm run stop:prod)",
+    "stop:stage": "(cd authentication-service && npm run stop:stage) && (cd api-gateway && npm run stop:stage)"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "pm2": "^5.4.3",
+    "winston": "^3.17.0"
+  }
+}

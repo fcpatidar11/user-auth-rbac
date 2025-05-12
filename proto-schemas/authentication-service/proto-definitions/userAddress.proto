@@ -1,0 +1,88 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+
+service userAddressService {
+    rpc createProfileAddress(createAddressRequest) returns(addressResponse) {}
+    rpc updateProfileAddress(updateAddressRequest) returns(addressResponse) {}
+    rpc deleteProfileAddress(deleteAddressRequest) returns(deleteAddressResponse) {}
+    rpc fetchProfileAddress(fetchAddressRequest) returns(addressResponse) {}
+    rpc fetchProfileAddresses(fetchAddressesRequest) returns(addressesResponse) {}
+    rpc createUserAddress(createAddressRequest) returns(addressResponse) {}
+    rpc updateUserAddress(updateAddressRequest) returns(addressResponse) {}
+    rpc deleteUserAddress(deleteAddressRequest) returns(deleteAddressResponse) {}
+    rpc fetchUserAddress(fetchAddressRequest) returns(addressResponse) {}
+    rpc fetchUserAddresses(fetchAddressesRequest) returns(addressesResponse) {}
+}
+
+message addressLocation {
+    repeated double coordinates = 2;
+}
+
+message createAddressRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string streetName = 3;
+    string address = 4;
+    string country = 5;
+    string subdivision = 7;
+    string addressType = 8;
+    addressLocation location = 9;
+}
+
+message updateAddressRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string streetName = 3;
+    string address = 4;
+    string country = 5;
+    string subdivision = 7;
+    string addressType = 8;
+    addressLocation location = 9;
+}
+
+message deleteAddressRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchAddressRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchAddressesRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message address {
+    string _id = 1;
+    string user = 2;
+    string streetName = 3;
+    string address = 4;
+    string country = 5;
+    string subdivision = 7;
+    string addressType = 8;
+    addressLocation location = 9;
+    string createdAt = 10;
+    string updatedAt = 11;
+}
+
+message addressResponse {
+    address data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message deleteAddressResponse {
+    bool data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message addressesResponse {
+    repeated address data = 1;
+    string details = 2;
+    int32 code = 3;
+}

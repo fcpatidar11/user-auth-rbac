@@ -1,0 +1,79 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service userContactService {
+    rpc createProfileContact(createContactRequest) returns(contactResponse) {}
+    rpc updateProfileContact(updateContactRequest) returns(contactResponse) {}
+    rpc deleteProfileContact(deleteContactRequest) returns(deleteContactResponse) {}
+    rpc fetchProfileContact(fetchContactRequest) returns(contactResponse) {}
+    rpc fetchProfileContacts(fetchContactsRequest) returns(contactsResponse) {}
+    rpc createUserContact(createContactRequest) returns(contactResponse) {}
+    rpc updateUserContact(updateContactRequest) returns(contactResponse) {}
+    rpc deleteUserContact(deleteContactRequest) returns(deleteContactResponse) {}
+    rpc fetchUserContact(fetchContactRequest) returns(contactResponse) {}
+    rpc fetchUserContacts(fetchContactsRequest) returns(contactsResponse) {}
+}
+
+message createContactRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string contact = 3;
+    string countryCode = 4;
+    string dialCode = 5;
+    string contactType = 6;
+}
+
+message updateContactRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    string contact = 3;
+    string countryCode = 4;
+    string dialCode = 5;
+    string contactType = 6;
+    string contactId = 7;
+}
+
+message deleteContactRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchContactRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message fetchContactsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+}
+
+message contact {
+    string _id = 1;
+    string user = 2;
+    string contact = 3;
+    string countryCode = 4;
+    string dialCode = 5;
+    string contactType = 6;
+    string createdAt = 7;
+    string updatedAt = 8;
+}
+
+message contactResponse {
+    contact data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message deleteContactResponse {
+    bool data = 1;
+    string details = 2;
+    int32 code = 3;
+}
+
+message contactsResponse {
+    repeated contact data = 1;
+    string details = 2;
+    int32 code = 3;
+}

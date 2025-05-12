@@ -1,0 +1,49 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@docs/*": [
+                "docs/*"
+            ],
+            "@shared/*": [
+                "shared/*"
+            ],
+            "@configs/*": [
+                "shared/configs/*"
+            ],
+            "@constants/*": [
+                "shared/constants/*"
+            ],
+            "@utils/*": [
+                "shared/utils/*"
+            ],
+            "@loggers/*": [
+                "shared/utils/loggers/*"
+            ],
+            "@src/*": [
+                "src/*"
+            ],
+            "@api/*": [
+                "src/api/*"
+            ],
+            "@controllers/*": [
+                "src/api/controllers/*"
+            ],
+            "@middlewares/*": [
+                "src/api/middlewares/*"
+            ],
+            "@routes/*": [
+                "src/api/routes/*"
+            ],
+            "@grpcDir/*": [
+                "src/grpc/*"
+            ],
+            "@clients/*": [
+                "src/grpc/clients/*"
+            ],
+            "@formatters/*": [
+                "src/formatters/*"
+            ]
+        }
+    }
+}

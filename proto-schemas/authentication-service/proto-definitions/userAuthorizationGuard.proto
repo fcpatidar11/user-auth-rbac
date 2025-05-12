@@ -1,0 +1,79 @@
+syntax = "proto3"; //Specify proto3 version.
+
+package authenticationPackage; //Optional: unique package name.
+ 
+service userAuthorizationGuardService {
+    rpc updateUserPermissions(updateUserPermissionsRequest) returns(permissionGuardResponse) {}
+    rpc updateUserRoles(updateUserRolesRequest) returns(permissionGuardResponse) {}
+    rpc revokeUserPermissions(revokeUserPermissionsRequest) returns(permissionGuardResponse) {}
+}
+
+message permissionGuardInfo {
+    message permissionGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message permissionData {
+        string _id = 1;
+        string code = 2;
+        string name = 3;
+        string description = 4;
+        permissionGroupData group = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+    }
+    message roleGroupData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        bool isActive = 4;
+        string createdAt = 5;
+        string updatedAt = 6;
+    }
+    message roleData {
+        string _id = 1;
+        string name = 2;
+        string description = 3;
+        roleGroupData group = 4;
+        bool isSystem = 5;
+        bool isActive = 6;
+        string createdAt = 7;
+        string updatedAt = 8;
+        repeated permissionData permissions = 9;
+    }
+    repeated permissionData grantPermissions = 12;
+    repeated roleData roles = 13;
+    repeated permissionData revokePermissions = 14;
+}
+
+message updateUserPermissionsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    repeated string assignPermissions = 3;
+    repeated string removePermissions = 4;
+}
+
+message updateUserRolesRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    repeated string assignRoles = 3;
+    repeated string removeRoles = 4;
+}
+
+message revokeUserPermissionsRequest {
+    map<string, string> reqParams = 1;
+    map<string, string> reqQueries = 2;
+    repeated string assignPermissions = 3;
+    repeated string removePermissions = 4;
+}
+
+message permissionGuardResponse {
+    permissionGuardInfo data = 1;
+    string details = 2;
+    int32 code = 3;
+}
