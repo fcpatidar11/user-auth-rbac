@@ -27,6 +27,9 @@ const authController = {
     login: (req, res) => {
         return processServiceHandler(req, res, authService.login.bind(authService));
     },
+    signup: (req, res) => {
+        return processServiceHandler(req, res, authService.signup.bind(authService));
+    },
     forgotPassword: (req, res) => {
         return processServiceHandler(req, res, authService.forgotPassword.bind(authService));
     },

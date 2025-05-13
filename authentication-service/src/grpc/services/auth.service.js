@@ -23,6 +23,6 @@ module.exports = {
         authorizationMiddleware.authorizeUser(false,
             authModel.fetchDashboardOverview
         )
-    )
-
+    ),
+    signup: authValidations.signup(authModel.signup)
 };

@@ -6,6 +6,7 @@ const sendEmail = require("@templates/email.template");
 const appConstant = require("@constants/app.constant");
 const passwordHash = require("password-hash");
 const responseFormatter = require("@formatters/grpc.response");
+const roleHelper = require("@helpers/role.helper");
 
 module.exports = {
     acceptUserInvitation: async (call, callback) => {
@@ -158,6 +159,61 @@ module.exports = {
         } catch (error) {
             serverLogger.error(appMessage.common.error, null, error);
             return responseFormatter.handleInternal(call, callback, appMessage.common.error);
+        }
+    },
+    signup: async (call, callback) => {
+        const { firstName, middleName, lastName, userName, email, password, gender, role } = call.request;
+        const { userType = "USER" } = role || {};
+        try {
+            const [existsEmail, existsUserName, roleInfo] = await Promise.all([
+                userHelper.retrieve({ email }),
+                userHelper.retrieve({ userName }),
+                roleHelper.retrieve({ name: role })
+            ]);
+            if (!roleInfo) {
+                return responseFormatter.handleNotFound(call, callback, appMessage.role.notFound);
+            }
+
+            const roleId = String(roleInfo._id);
+
+            if (existsEmail) {
+                return responseFormatter.handleAlreadyExists(call, callback, appMessage.user.emailAlreadyExists);
+            }
+            if (existsUserName) {
+                return responseFormatter.handleAlreadyExists(call, callback, appMessage.user.userNameAlreadyTaken);
+            }
+
+            const data = await userHelper.create({
+                firstName, 
+                middleName, 
+                lastName, 
+                userName, 
+                email, 
+                gender,
+                password: passwordHash.generate(password),
+                isEmailVerified: true, // Set to true as this is self-signup
+                roles: [roleId],
+                revokePermissions: [],
+                grantPermissions: []
+            });
+
+            if (!data) {
+                return responseFormatter.handleNotFound(call, callback, appMessage.user.notFound);
+            }
+
+            const token = await jwtUtil.generateAuthToken({ userId: data._id, email: data.email });
+
+            return responseFormatter.handleOk(call, callback, appMessage.user.register, { data, token }, {
+                performedFor: data._id,
+                actionType: appConstant.LOGGED_ACTIONS.CREATE,
+                moduleType: appConstant.LOGGED_MODULES.User,
+                entityId: data._id,
+                entityType: appConstant.LOGGED_ENTITY_TYPES.User,
+                remarks: userType
+            });
+        } catch (error) {
+            serverLogger.error(appMessage.user.registerError, null, error);
+            return responseFormatter.handleInternal(call, callback, appMessage.user.registerError);
         }
     }
 };

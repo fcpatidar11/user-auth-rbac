@@ -358,6 +358,94 @@
                 }
             }
         },
+        "/signup": {
+            "post": {
+                "tags": [
+                    "NON_AUTH"
+                ],
+                "security": [
+                    {
+                        "AcceptLanguage": []
+                    }
+                ],
+                "summary": "User Signup",
+                "description": "Register a new user account.",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "middleName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "userName": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "password": {
+                                    "type": "string"
+                                },
+                                "gender": {
+                                    "type": "string",
+                                    "enum": ["male", "female", "other"]
+                                },
+                                "role": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/responses/SuccessResponse"
+                    },
+                    "401": {
+                        "$ref": "#/responses/UnauthorizedResponse"
+                    },
+                    "403": {
+                        "$ref": "#/responses/ForbiddenResponse"
+                    },
+                    "422": {
+                        "$ref": "#/responses/UnprocessableEntityResponse"
+                    },
+                    "500": {
+                        "$ref": "#/responses/InternalServerErrorResponse"
+                    },
+                    "409": {
+                        "$ref": "#/responses/ConflictResponse"
+                    },
+                    "405": {
+                        "$ref": "#/responses/MethodNotAllowedResponse"
+                    },
+                    "504": {
+                        "$ref": "#/responses/GatewayTimeoutResponse"
+                    },
+                    "404": {
+                        "$ref": "#/responses/NotFoundResponse"
+                    },
+                    "400": {
+                        "$ref": "#/responses/BadRequestResponse"
+                    },
+                    "502": {
+                        "$ref": "#/responses/BadGatewayResponse"
+                    },
+                    "503": {
+                        "$ref": "#/responses/ServiceUnavailableResponse"
+                    }
+                }
+            }
+        },
         "/password/forgot": {
             "post": {
                 "tags": [
