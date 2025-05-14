@@ -7,6 +7,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || 'local'}` });
 module.exports = {
     AUTHENTICATION_SERVICE_DATABASE_URL: process.env.AUTHENTICATION_SERVICE_DATABASE_URL,
     AUTHENTICATION_SERVICE_ADDRESS: process.env.AUTHENTICATION_SERVICE_ADDRESS,
+    NOTIFICATION_SERVICE_ADDRESS: process.env.NOTIFICATION_SERVICE_ADDRESS,
     AUTHENTICATION_SERVICE_DEFAULT_LANGUAGE: process.env.AUTHENTICATION_SERVICE_DEFAULT_LANGUAGE,
     AUTHENTICATION_SERVICE_AUTH_SECRET_KEY: process.env.AUTHENTICATION_SERVICE_AUTH_SECRET_KEY,
     AUTHENTICATION_SERVICE_AUTH_TOKEN_EXPIRE_TIME: process.env.AUTHENTICATION_SERVICE_AUTH_TOKEN_EXPIRE_TIME,
@@ -23,11 +24,14 @@ module.exports = {
     SMTP_PASSWORD: process.env.SMTP_PASSWORD,
     SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL,
     ACTIVITY_LOGS_SERVICE_ADDRESS: process.env.ACTIVITY_LOGS_SERVICE_ADDRESS,
-    NOTIFICATION_SERVICE_ADDRESS: process.env.NOTIFICATION_SERVICE_ADDRESS,
     AUTHENTICATION_SERVICE_PROTO_PATH: path.join(process.cwd(), `../proto-schemas/authentication-service`),
     ACTIVITY_LOGS_SERVICE_PROTO_PATH: path.join(process.cwd(), `../proto-schemas/activity-log-service`),
     NOTIFICATION_SERVICE_PROTO_PATH: path.join(process.cwd(), `../proto-schemas/notification-service`),
     PUBLIC_FOLDER_PATH: path.join(process.cwd(), "../public"),
     TEMP_FOLDER_PATH: "temporaries",
-    TEMP_FOLDER_MAX_FILE_AGE_HOURS: process.env.TEMP_FOLDER_MAX_FILE_AGE_HOURS
+    TEMP_FOLDER_MAX_FILE_AGE_HOURS: process.env.TEMP_FOLDER_MAX_FILE_AGE_HOURS,
+    SMTP_KEY: process.env.SMTP_KEY,
+    SMTP_FROM_NAME: process.env.SMTP_FROM_NAME,
+    SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL,
+    PROJECT_NAME: process.env.PROJECT_NAME || "Project Name",
 };

@@ -8,6 +8,14 @@ module.exports = {
         SUBSIDIARY: "subsidiary",
         TECHNICIAN: "technician"
     },
+    DEFAULT_ROLES: {
+        SUPER_ADMIN: "superAdmin",
+        ADMIN: "admin",
+        PARTNER: "partner",
+        CUSTOMER: "customer",
+        SUBSIDIARY: "subsidiary",
+        TECHNICIAN: "technician"
+    },
     USER_TYPES: {
         ADMIN: "admin",
         PARTNER: "partner",

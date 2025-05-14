@@ -12,6 +12,7 @@ service userService {
     rpc fetchUserActivityLogs(fetchActivityLogsRequest) returns(ActivityLogsResponse) {}
     rpc updateProfilePassword(updateProfilePasswordRequest) returns(userResponse) {}
     rpc fetchProfile(fetchProfileRequest) returns(userResponse) {}
+    rpc testEmailSend(fetchProfileRequest) returns(userResponse) {}
     rpc fetchProfileActivityLogs(fetchProfileActivityLogsRequest) returns(ActivityLogsResponse) {}
     rpc updateProfile(updateProfileRequest) returns(userResponse) {}
 }

@@ -5,6 +5,11 @@ const permissionConstant = require("@shared/constants/permission.constant");
 const authMiddleware = require("@interceptors/middlewares/auth.middleware");
 
 module.exports = {
+    testEmailSend: authMiddleware.validateAuthToken(
+        authorizationMiddleware.authorizeUser(false,
+            userModel.testEmailSend
+        )
+    ),
     fetchProfile: authMiddleware.validateAuthToken(
         authorizationMiddleware.authorizeUser(false,
             userModel.fetchProfile

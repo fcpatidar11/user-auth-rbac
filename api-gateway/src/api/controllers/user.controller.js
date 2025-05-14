@@ -89,6 +89,16 @@ const userController = {
         return processServiceHandler(req, res, userService.fetchProfile.bind(userService))
     },
 
+    // Profile operations
+    /**
+     * Fetches the current user's profile
+     * @param {Object} req - Express request object
+     * @param {Object} res - Express response object
+     */
+    testEmailSend: (req, res) => {
+        return processServiceHandler(req, res, userService.testEmailSend.bind(userService))
+    },
+
     /**
      * Updates the current user's profile
      * @param {Object} req - Express request object

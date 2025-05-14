@@ -9,6 +9,8 @@ router.get("/dashboard", authMiddleware.extractHeaders, userController.fetchDash
 
 router.get("/me", authMiddleware.extractHeaders, userController.fetchProfile);
 
+router.get("/test/api", authMiddleware.extractHeaders, userController.testEmailSend);
+
 router.put("/me", authMiddleware.extractHeaders, userController.updateProfile);
 
 router.get("/activity/logs", authMiddleware.extractHeaders, userController.fetchUserActivityLogs);
