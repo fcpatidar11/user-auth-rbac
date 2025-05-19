@@ -4,6 +4,9 @@ package notificationPackage;
 
 service notificationService {
   rpc sendEmailNotification(SendEmailNotificationRequest) returns (notificationResponse);
+  rpc sendSMSNotification(SendSMSNotificationRequest) returns (notificationResponse);
+  rpc sendVerificationCode(SendVerificationCodeRequest) returns (notificationResponse);
+  rpc verifyOTPCode(VerifyOTPCodeRequest) returns (notificationResponse);
 }
 
 message UserInfo {
@@ -19,6 +22,18 @@ message SendEmailNotificationRequest {
   string templateKey = 4;
 }
 
+message SendVerificationCodeRequest {
+  string phoneNumber = 1;
+}
+
+message SendSMSNotificationRequest {
+  string phoneNumber = 1;
+  string message = 2;
+}
+message VerifyOTPCodeRequest {
+  string phoneNumber = 1;
+  string code = 2;
+}
 message SendEmailNotificationResponse {
   int32 code = 1;
   string message = 2;

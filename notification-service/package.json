@@ -45,6 +45,7 @@
     "pm2": "^5.4.3",
     "regex-escape": "^3.4.11",
     "rotating-file-stream": "^3.2.6",
+    "twilio": "^5.6.1",
     "winston": "^3.17.0"
   }
 }

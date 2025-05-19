@@ -102,5 +102,65 @@ module.exports = {
         } catch (error) {
             return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error || "Validation error.");
         }
-    }
+    },
+    sendVerificationCode: (method) => async (call, callback) => {
+        try {
+            const bodyValidator = new Validator(call.request, {
+                "phoneNumber": "required|string"
+            }, {
+                "phoneNumber.required": appMessage.validation.required.phoneNumber,
+                "phoneNumber.string": appMessage.validation.string.phoneNumber
+            });
+            const matchedBody = await bodyValidator.check();
+            if (!matchedBody) {
+                const message = getFirstErrorMessage(bodyValidator);
+                return responseFormatter.handleFailedPrecondition(call, callback, message);
+            }
+            return method(call, callback);
+        } catch (error) {
+            return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error);
+        }
+    },
+    sendSMSNotification: (method) => async (call, callback) => {
+        try {
+            const bodyValidator = new Validator(call.request, {
+                "phoneNumber": "required|string",
+                "message": "required|string"
+            }, {
+                "phoneNumber.required": appMessage.validation.required.phoneNumber,
+                "phoneNumber.string": appMessage.validation.string.phoneNumber,
+                "message.required": appMessage.validation.required.firstName,
+                "message.string": appMessage.validation.string.firstName
+            });
+            const matchedBody = await bodyValidator.check();
+            if (!matchedBody) {
+                const message = getFirstErrorMessage(bodyValidator);
+                return responseFormatter.handleFailedPrecondition(call, callback, message);
+            }
+            return method(call, callback);
+        } catch (error) {
+            return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error);
+        }
+    },
+    verifyOTPCode: (method) => async (call, callback) => {
+        try {
+            const bodyValidator = new Validator(call.request, {
+                "phoneNumber": "required|string",
+                "code": "required|string"
+            }, {
+                "phoneNumber.required": appMessage.validation.required.phoneNumber,
+                "phoneNumber.string": appMessage.validation.string.phoneNumber,
+                "code.required": appMessage.validation.required.code,
+                "code.string": appMessage.validation.string.code
+            });
+            const matchedBody = await bodyValidator.check();
+            if (!matchedBody) {
+                const message = getFirstErrorMessage(bodyValidator);
+                return responseFormatter.handleFailedPrecondition(call, callback, message);
+            }
+            return method(call, callback);
+        } catch (error) {
+            return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error);
+        }
+    },
 }

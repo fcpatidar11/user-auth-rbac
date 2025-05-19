@@ -14,6 +14,9 @@
             "@mailer/*": [
                 "lib/mailer-lib/*"
             ],
+            "@sms/*": [
+                "lib/sms-lib/*"
+            ],
             "@shared/*": [
                 "shared/*"
             ],

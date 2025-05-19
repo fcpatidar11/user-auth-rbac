@@ -26,3 +26,59 @@ module.exports.sendEmailNotificationConnector = (payload = {}) => {
     });
 };
 
+module.exports.sendSMSVerificationCodeConnector = (payload = {}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            notificationService.sendVerificationCode(payload, (error, result) => {
+                if (error) {
+                    serverLogger.error("GRPC SMS Notification verification code Service Error", null, error);
+                    return reject(error);
+                } else {
+                    console.log("GRPC SMS Notification verification code Response:", result);
+                    return resolve(result);
+                }
+            });
+        } catch (error) {
+            serverLogger.error("GRPC SMS Notification verification code Service Exception", error);
+            return reject(error);
+        }
+    });
+};
+
+module.exports.sendSMSNotificationConnector = (payload = {}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            notificationService.sendSMSNotification(payload, (error, result) => {
+                if (error) {
+                    serverLogger.error("GRPC SMS Notification Service Error", null, error);
+                    return reject(error);
+                } else {
+                    console.log("GRPC SMS Notification Response:", result);
+                    return resolve(result);
+                }
+            });
+        } catch (error) {
+            serverLogger.error("GRPC SMS Notification Service Exception", error);
+            return reject(error);
+        }
+    });
+};
+
+module.exports.verifyOTPCodeConnector = (payload = {}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            notificationService.verifyOTPCode(payload, (error, result) => {
+                if (error) {
+                    serverLogger.error("GRPC SMS Notification Service Error", null, error);
+                    return reject(error);
+                } else {
+                    console.log("GRPC SMS Notification Response:", result);
+                    return resolve(result);
+                }
+            });
+        } catch (error) {
+            serverLogger.error("GRPC SMS Notification Service Exception", error);
+            return reject(error);
+        }
+    });
+};

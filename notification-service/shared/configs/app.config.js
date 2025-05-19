@@ -34,4 +34,8 @@ module.exports = {
     SMTP_FROM_NAME: process.env.SMTP_FROM_NAME,
     SMTP_FROM_EMAIL: process.env.SMTP_FROM_EMAIL,
     PROJECT_NAME: process.env.PROJECT_NAME || "Project Name",
+    TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
+    TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
+    TWILIO_ACCOUNT_OTP_SID: process.env.TWILIO_ACCOUNT_OTP_SID,
+    TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER,
 };

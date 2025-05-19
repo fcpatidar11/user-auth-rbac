@@ -262,6 +262,11 @@ module.exports = {
                         grpcResponse.details
                     );
                 }
+
+                // const simpleSMS = await notificationConnector.sendSMSNotificationConnector({ phoneNumber: "+917566001435", message: "Hello Encoresky" });
+                // const sendOTP = await notificationConnector.sendSMSVerificationCodeConnector({ phoneNumber: "+917566001435" });
+                // const verifyOTP = await notificationConnector.verifyOTPCodeConnector({ phoneNumber: "+917566001435", code: '810553' });
+
             } catch (error) {
                 serverLogger.error("Failed to send email notification", null, error);
                 return responseFormatter.handleInternal(call, callback, 'Failed to send email');
