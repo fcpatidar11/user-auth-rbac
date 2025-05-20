@@ -8,6 +8,7 @@ moduleAlias.addAliases({
   "@database": path.resolve(__dirname, "lib/database"),
   "@mailer": path.resolve(__dirname, "lib/mailer-lib"),
   "@sms": path.resolve(__dirname, "lib/sms-lib"),
+  "@push": path.resolve(__dirname, "lib/push-lib"),
   "@shared": path.resolve(__dirname, "shared"),
   "@configs": path.resolve(__dirname, "shared/configs"),
   "@constants": path.resolve(__dirname, "shared/constants"),

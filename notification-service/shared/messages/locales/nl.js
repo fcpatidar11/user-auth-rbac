@@ -240,6 +240,9 @@ module.exports = {
 			"templateVariables": "Sjabloonvariabelen zijn vereist voor e-mail verzending.",
 			"templateVariables.*.pattern": "Sjabloonvariabele patroon is vereist voor e-mail verzending.",
 			"templateVariables.*.value": "Sjabloonvariabele waarde is vereist voor e-mail verzending.",
+			"deviceToken": "DeviceToken is vereist voor push notificatie.",
+			"title": "Titel is vereist voor push notificatie.",
+			"body": "Body is vereist voor push notificatie.",
 		},
 		"string": {
 			"email": "E-mail moet een tekst zijn.",
@@ -281,6 +284,9 @@ module.exports = {
 			"templateName": "Sjabloonnaam moet een string zijn.",
 			"templateVariables.*.pattern": "Sjabloonvariabele patroon moet een string zijn.",
 			"templateVariables.*.value": "Sjabloonvariabele waarde moet een string zijn.",
+			"deviceToken": "DeviceToken moet een string zijn.",
+			"title": "Titel moet een string zijn.",
+			"body": "Body moet een string zijn.",
 		},
 		"numeric": {
 			"locationLongitude": "Der Längengrad des Standorts muss numerisch sein.",

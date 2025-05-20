@@ -240,6 +240,9 @@ module.exports = {
 			"templateVariables": "TemplateVariabelen ass erfuerderlech",
 			"templateVariables.*.pattern": "TemplateVariabelenPattern ass erfuerderlech",
 			"templateVariables.*.value": "TemplateVariabelenWäert ass erfuerderlech",
+			"deviceToken": "GerätsToken ass erfuerderlech",
+			"title": "Titel ass erfuerderlech",
+			"body": "Kierper ass erfuerderlech",
 		},
 		"string": {
 			"email": "E-Mail muss en Text sinn.",
@@ -281,6 +284,9 @@ module.exports = {
 			"templateName": "TemplateNumm muss eng Zeechnenreihe sinn.",
 			"templateVariablesPattern": "TemplateVariabelenPattern mussen eng Zeechnenreihe sinn.",
 			"templateVariablesValue": "TemplateVariabelenWäert mussen eng Zeechnenreihe sinn.",
+			"deviceToken": "GerätsToken muss eng Zeechnenreihe sinn.",
+			"title": "Titel muss eng Zeechnenreihe sinn.",
+			"body": "Kierper muss eng Zeechnenreihe sinn.",
 		},
 		"numeric": {
 			"locationLongitude": "Längegrad vun der Plaz muss numeresch sinn.",

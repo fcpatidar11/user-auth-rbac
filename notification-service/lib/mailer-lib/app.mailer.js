@@ -23,7 +23,7 @@ const sendViaSendGrid = async (message) => {
 
     sgMail.setApiKey(appConfig.SENDGRID_API_KEY);
     const response = await sgMail.send(message);
-    serverLogger.info(`✅ Email sent via SendGrid: ${response[0].statusCode}`);
+    serverLogger.info(`Email sent via SendGrid: ${response[0].statusCode}`);
     return response;
 };
 

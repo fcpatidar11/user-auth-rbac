@@ -240,6 +240,9 @@ module.exports = {
             "templateVariables": "validation.required.templateVariables",
             "templateVariablePattern": "validation.required.templateVariablePattern",
             "templateVariableValue": "validation.required.templateVariableValue",
+            "deviceToken": "validation.required.deviceToken",
+            "title": "validation.required.title",
+            "body": "validation.required.body",
         },
         "string": {
             "email": "validation.string.email",
@@ -281,6 +284,9 @@ module.exports = {
             "templateName": "validation.string.templateName",
             "templateVariablePattern": "validation.string.templateVariablePattern",
             "templateVariableValue": "validation.string.templateVariableValue",
+            "deviceToken": "validation.string.deviceToken",
+            "title": "validation.string.title",
+            "body": "validation.string.body",
         },
         "numeric": {
             "locationLongitude": "validation.numeric.locationLongitude",

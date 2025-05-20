@@ -3,6 +3,7 @@ const serverLogger = require("@loggers/server.logger");
 const responseFormatter = require("@formatters/grpc.response");
 const appConstant = require("@constants/app.constant");
 const sendMailNotification = require("@mailer/app.mailer");
+const sendPushNotification = require("@push/app.push");
 const { sendVerificationCode, sendSMSNotification, verifyCode } = require("@sms/app.sms");
 const emailTemplateHelper = require("@helpers/emailTemplate.helper");
 const SMSTemplateHelper = require("@helpers/smsTemplate.helper");
@@ -57,7 +58,66 @@ module.exports = {
             return responseFormatter.handleInternal(call, callback, appMessage.user.notFound);
         }
     },
+    sendSMSNotification: async (call, callback) => {
+        try {
+            const { phoneNumber, templateName, templateVariables } = call.request;
+            let smsTemplateData = await SMSTemplateHelper.retrieve({ templateName: templateName });
+            if (!smsTemplateData) {
+                return responseFormatter.handleInvalidArgument(call, callback, appMessage.notification.templateInvalid);
+            }
 
+            let message = smsTemplateData.message;
+
+            // Step 2: Replace dynamic placeholders in the combined template
+            for (const { pattern, value } of templateVariables) {
+                if (pattern && value) {
+                    message = message.replace(new RegExp(pattern, 'g'), value);
+                }
+            }
+
+            sendSMSNotification(phoneNumber, message)
+                .then(result => {
+                    console.log("SMS SID:", result.sid);
+                    const responseData = { messageSid: result.sid };
+                    return responseFormatter.handleOk(call, callback, appMessage.user.invitationInfo, responseData, null);
+                })
+                .catch(err => {
+                    console.error("SMS Error:", err);
+                    const resMessage = err?.code === 60200
+                        ? "Please make sure that the mobile number provided is valid."
+                        : "Failed to send SMS.";
+                    return responseFormatter.handleInternal(call, callback, resMessage);
+                });
+
+        } catch (error) {
+            serverLogger.error("Failed to send email notification", null, error);
+            return responseFormatter.handleInternal(call, callback, appMessage.user.notFound);
+        }
+    },
+
+    sendPushNotification: async (call, callback) => {
+        try {
+            const { deviceToken, title, body, user } = call.request;
+
+            sendPushNotification(deviceToken, title, body, user)
+                .then(result => {
+                    console.log("Push notification result:", result);
+                    const responseData = { messageSid: result };
+                    return responseFormatter.handleOk(call, callback, appMessage.user.invitationInfo, responseData, null);
+                })
+                .catch(err => {
+                    console.error("Push notification Error:", err);
+                    const resMessage = err?.code === 60200
+                        ? "Please make sure that the mobile number provided is valid."
+                        : "Failed to send SMS.";
+                    return responseFormatter.handleInternal(call, callback, resMessage);
+                });
+
+        } catch (error) {
+            serverLogger.error("Failed to send email notification", null, error);
+            return responseFormatter.handleInternal(call, callback, appMessage.user.notFound);
+        }
+    },
     sendVerificationCode: async (call, callback) => {
         try {
             const { phoneNumber } = call.request;
@@ -79,42 +139,6 @@ module.exports = {
             return responseFormatter.handleInternal(call, callback, appMessage.user.notFound);
         }
     },
-    sendSMSNotification: async (call, callback) => {
-        try {
-            const { phoneNumber, templateName, templateVariables } = call.request;
-            let smsTemplateData = await SMSTemplateHelper.retrieve({ templateName: templateName });
-            if (!smsTemplateData) {
-                return responseFormatter.handleInvalidArgument(call, callback, appMessage.notification.templateInvalid);
-            }
-
-            let message = smsTemplateData.message;
-
-            // Step 2: Replace dynamic placeholders in the combined template
-            for (const { pattern, value } of templateVariables) {
-                if (pattern && value) {
-                    message = message.replace(new RegExp(pattern, 'g'), value);
-                }
-            }
-
-            sendSMSNotification(phoneNumber, message)
-                .then(result => {
-                    console.log("✅ SMS SID:", result.sid);
-                    const responseData = { messageSid: result.sid };
-                    return responseFormatter.handleOk(call, callback, appMessage.user.invitationInfo, responseData, null);
-                })
-                .catch(err => {
-                    console.error("❌ SMS Error:", err);
-                    const resMessage = err?.code === 60200
-                        ? "Please make sure that the mobile number provided is valid."
-                        : "Failed to send SMS.";
-                    return responseFormatter.handleInternal(call, callback, resMessage);
-                });
-
-        } catch (error) {
-            serverLogger.error("Failed to send email notification", null, error);
-            return responseFormatter.handleInternal(call, callback, appMessage.user.notFound);
-        }
-    },
     verifyOTPCode: async (call, callback) => {
         try {
             const { phoneNumber, code } = call.request;
@@ -127,7 +151,7 @@ module.exports = {
                     }
                 })
                 .catch(err => {
-                    console.error("❌ Code Verification Failed:", err);
+                    console.error("Code Verification Failed:", err);
                     const resMessage = err?.code === 60200
                         ? "Invalid phone number."
                         : "Code verification failed.";

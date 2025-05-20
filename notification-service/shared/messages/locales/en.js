@@ -240,6 +240,9 @@ module.exports = {
 			"templateVariables": "Template variables are required.",
 			"templateVariablePattern": "Template variable pattern is required.",
 			"templateVariableValue": "Template variable value is required.",
+			"deviceToken": "Device token is required.",
+			"title": "Title is required.",
+			"body": "Body is required.",
 		},
 		"string": {
 			"email": "Email must be a string.",
@@ -280,7 +283,10 @@ module.exports = {
 			"role": "Role must be a string.",
 			"templateName": "Template name must be a string.",
 			"templateVariablePattern": "Template variable pattern must be a string.",
-			"templateVariableValue": "Template variable value must be a string."
+			"templateVariableValue": "Template variable value must be a string.",
+			"deviceToken": "Device token must be a string.",
+			"title": "Title must be a string.",
+			"body": "Body must be a string.",
 		},
 		"numeric": {
 			"locationLongitude": "Location longitude must be numeric.",

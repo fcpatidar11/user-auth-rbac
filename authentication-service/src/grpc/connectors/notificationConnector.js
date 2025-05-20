@@ -25,26 +25,6 @@ module.exports.sendEmailNotificationConnector = (payload = {}) => {
         }
     });
 };
-
-module.exports.sendSMSVerificationCodeConnector = (payload = {}) => {
-    return new Promise((resolve, reject) => {
-        try {
-            notificationService.sendVerificationCode(payload, (error, result) => {
-                if (error) {
-                    serverLogger.error("GRPC SMS Notification verification code Service Error", null, error);
-                    return reject(error);
-                } else {
-                    console.log("GRPC SMS Notification verification code Response:", result);
-                    return resolve(result);
-                }
-            });
-        } catch (error) {
-            serverLogger.error("GRPC SMS Notification verification code Service Exception", error);
-            return reject(error);
-        }
-    });
-};
-
 module.exports.sendSMSNotificationConnector = (payload = {}) => {
     return new Promise((resolve, reject) => {
         try {
@@ -59,6 +39,42 @@ module.exports.sendSMSNotificationConnector = (payload = {}) => {
             });
         } catch (error) {
             serverLogger.error("GRPC SMS Notification Service Exception", error);
+            return reject(error);
+        }
+    });
+};
+module.exports.sendPushNotificationConnector = (payload = {}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            notificationService.sendPushNotification(payload, (error, result) => {
+                if (error) {
+                    serverLogger.error("GRPC Push Notification Service Error", null, error);
+                    return reject(error);
+                } else {
+                    console.log("GRPC Push Notification Response:", result);
+                    return resolve(result);
+                }
+            });
+        } catch (error) {
+            serverLogger.error("GRPC Push Notification Service Exception", error);
+            return reject(error);
+        }
+    });
+};
+module.exports.sendSMSVerificationCodeConnector = (payload = {}) => {
+    return new Promise((resolve, reject) => {
+        try {
+            notificationService.sendVerificationCode(payload, (error, result) => {
+                if (error) {
+                    serverLogger.error("GRPC SMS Notification verification code Service Error", null, error);
+                    return reject(error);
+                } else {
+                    console.log("GRPC SMS Notification verification code Response:", result);
+                    return resolve(result);
+                }
+            });
+        } catch (error) {
+            serverLogger.error("GRPC SMS Notification verification code Service Exception", error);
             return reject(error);
         }
     });

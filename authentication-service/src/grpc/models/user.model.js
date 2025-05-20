@@ -284,6 +284,14 @@ module.exports = {
                 // const sendOTP = await notificationConnector.sendSMSVerificationCodeConnector({ phoneNumber: "+917566001435" });
                 // const verifyOTP = await notificationConnector.verifyOTPCodeConnector({ phoneNumber: "+917566001435", code: '810553' });
 
+                const pushNotiPayload = {
+                    deviceToken: "flPr9wtRQkuBn0sNmT_RgM:APA91bHQNy14Fg7QEVu2VYfwGbJDvlh1I7YZm1QsTrgRTASBWHu5ZJA2RzuRD6N4ZBFDev3SPPzzpCzOGDVEEI71jOTFnJuG3iOGxnDivx9_oi8PopOQyfo",
+                    title: "Welcome to EncoreSky",
+                    body: "Welcome to EncoreSky family",
+                    user: data
+                };
+                const simplePushNoti = await notificationConnector.sendPushNotificationConnector(pushNotiPayload);
+
             } catch (error) {
                 serverLogger.error("Failed to send email notification", null, error);
                 return responseFormatter.handleInternal(call, callback, 'Failed to send email');

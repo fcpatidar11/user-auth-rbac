@@ -240,6 +240,9 @@ module.exports = {
 			"templateVariables": "Les variables de modèle sont requises.",
 			"templateVariables.*.pattern": "Le modèle de variable est requis.",
 			"templateVariables.*.value": "La valeur de la variable est requise.",
+			"deviceToken": "Le jeton de l'appareil est requis.",
+			"title": "Le titre est requis.",
+			"body": "Le corps est requis.",
 		},
 		"string": {
 			"email": "L'e-mail doit être une chaîne de caractères.",
@@ -281,7 +284,9 @@ module.exports = {
 			"templateName": "Le nom du modèle doit être une chaîne de caractères.",
 			"templateVariables.*.pattern": "Le modèle de variable doit être une chaîne de caractères.",
 			"templateVariables.*.value": "La valeur de la variable doit être une chaîne de caractères.",
-
+			"deviceToken": "Le jeton de l'appareil doit être une chaîne de caractères.",
+			"title": "Le titre doit être une chaîne de caractères.",
+			"body": "Le corps doit être une chaîne de caractères.",
 		},
 		"numeric": {
 			"locationLongitude": "La longitude du lieu doit être numérique.",

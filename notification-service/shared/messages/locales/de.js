@@ -240,6 +240,9 @@ module.exports = {
 			"templateVariables": "Vorlagenvariablen sind erforderlich.",
 			"templateVariablePattern": "Vorlagenvariablenmuster ist erforderlich.",
 			"templateVariableValue": "Vorlagenvariablenwert ist erforderlich.",
+			"deviceToken": "Gerätetoken ist erforderlich.",
+			"title": "Titel ist erforderlich.",
+			"body": "Textkörper ist erforderlich.",
 		},
 		"string": {
 			"email": "E-Mail muss ein String sein.",
@@ -281,6 +284,9 @@ module.exports = {
 			"templateName": "Vorlagenname muss eine Zeichenkette sein.",
 			"templateVariablePattern": "Vorlagenvariablenmuster muss eine Zeichenfolge sein.",
 			"templateVariableValue": "Vorlagenvariablenwert muss eine Zeichenfolge sein.",
+			"deviceToken": "Gerätetoken muss eine Zeichenfolge sein.",
+			"title": "Titel muss eine Zeichenfolge sein.",
+			"body": "Der Textkörper muss eine Zeichenfolge sein.",
 		},
 		"numeric": {
 			"locationLongitude": "Der Längengrad des Standorts muss numerisch sein.",

@@ -23,7 +23,7 @@ const sendViaTwilio = async (sms) => {
         to: sms.to
     });
 
-    serverLogger.info(`✅ SMS sent via Twilio: ${result.sid}`);
+    serverLogger.info(`SMS sent via Twilio: ${result.sid}`);
     return result;
 };
 
@@ -43,7 +43,7 @@ const sendViaSNS = async (sms) => {
     };
 
     const result = await sns.publish(params).promise();
-    serverLogger.info(`✅ SMS sent via AWS SNS: ${result.MessageId}`);
+    serverLogger.info(`SMS sent via AWS SNS: ${result.MessageId}`);
     return result;
 };
 
@@ -59,7 +59,7 @@ const sendViaNexmo = async (sms) => {
         text: sms.message
     });
 
-    serverLogger.info(`✅ SMS sent via Nexmo: ${response.data.messages?.[0]?.messageId}`);
+    serverLogger.info(`SMS sent via Nexmo: ${response.data.messages?.[0]?.messageId}`);
     return response.data;
 };
 
@@ -83,7 +83,7 @@ const sendViaTextMagic = async (sms) => {
         }
     );
 
-    serverLogger.info(`✅ SMS sent via TextMagic: ${response.data.id}`);
+    serverLogger.info(`SMS sent via TextMagic: ${response.data.id}`);
     return response.data;
 };
 

@@ -17,6 +17,9 @@
             "@sms/*": [
                 "lib/sms-lib/*"
             ],
+            "@push/*": [
+                "lib/push-lib/*"
+            ],
             "@shared/*": [
                 "shared/*"
             ],
