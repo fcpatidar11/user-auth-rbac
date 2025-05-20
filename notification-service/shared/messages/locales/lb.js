@@ -235,7 +235,11 @@ module.exports = {
 			"contactId": "ContactId ass erfuerderlech",
 			"templateKey": "D'Schlëssel vum Template ass fir d'E-Mail Versendung erfuerderlech.",
 			"jwtToken": "De Token ass erfuerderlech fir d'E-Mail Versendung.",
-			"role": "De Rôle ass erfuerderlech fir d'E-Mail Versendung."
+			"role": "De Rôle ass erfuerderlech fir d'E-Mail Versendung.",
+			"templateName": "TemplateNumm ass erfuerderlech",
+			"templateVariables": "TemplateVariabelen ass erfuerderlech",
+			"templateVariables.*.pattern": "TemplateVariabelenPattern ass erfuerderlech",
+			"templateVariables.*.value": "TemplateVariabelenWäert ass erfuerderlech",
 		},
 		"string": {
 			"email": "E-Mail muss en Text sinn.",
@@ -273,7 +277,10 @@ module.exports = {
 			"contactId": "ContactId muss eng String sinn.",
 			"templateKey": "De Template-Schlëssel muss eng Zeechnenreihe sinn.",
 			"jwtToken": "De Token muss eng Zeechnenreihe sinn.",
-			"role": "D'Rolle muss eng Zeechnenreihe sinn."
+			"role": "D'Rolle muss eng Zeechnenreihe sinn.",
+			"templateName": "TemplateNumm muss eng Zeechnenreihe sinn.",
+			"templateVariablesPattern": "TemplateVariabelenPattern mussen eng Zeechnenreihe sinn.",
+			"templateVariablesValue": "TemplateVariabelenWäert mussen eng Zeechnenreihe sinn.",
 		},
 		"numeric": {
 			"locationLongitude": "Längegrad vun der Plaz muss numeresch sinn.",
@@ -295,7 +302,8 @@ module.exports = {
 			"relationshipPermissions": "Relatiounsrechter mussen eng Array sinn.",
 			"assignRoles": "Zouzeuweisend Rolle mussen eng Lëscht sinn.",
 			"removeRoles": "Ze entfernend Rolle mussen eng Lëscht sinn.",
-			"locationCoordinates": "Koordinate mussen eng Array sinn."
+			"locationCoordinates": "Koordinate mussen eng Array sinn.",
+			"templateVariables": "TemplateVariabelen mussen eng Array sinn.",
 		},
 		"length": {
 			"coordinates": "Koordinategréisst muss gläich 2 sinn."

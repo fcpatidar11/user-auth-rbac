@@ -236,6 +236,10 @@ module.exports = {
 			"templateKey": "Template key is required in email send",
 			"jwtToken": "Token is required for email send.",
 			"role": "Role is required for email send.",
+			"templateName": "Template name is required.",
+			"templateVariables": "Template variables are required.",
+			"templateVariablePattern": "Template variable pattern is required.",
+			"templateVariableValue": "Template variable value is required.",
 		},
 		"string": {
 			"email": "Email must be a string.",
@@ -274,6 +278,9 @@ module.exports = {
 			"templateKey": "Template key must be a string.",
 			"jwtToken": "Token must be a string.",
 			"role": "Role must be a string.",
+			"templateName": "Template name must be a string.",
+			"templateVariablePattern": "Template variable pattern must be a string.",
+			"templateVariableValue": "Template variable value must be a string."
 		},
 		"numeric": {
 			"locationLongitude": "Location longitude must be numeric.",
@@ -295,7 +302,8 @@ module.exports = {
 			"relationshipPermissions": "Relationship permissions must be an array.",
 			"assignRoles": "Assign roles must be an array.",
 			"removeRoles": "Remove roles must be an array.",
-			"locationCoordinates": "Coordinates must be an array."
+			"locationCoordinates": "Coordinates must be an array.",
+			"templateVariables": "Template variables must be an array.",
 		},
 		"length": {
 			"coordinates": "coordinates size must be equal to 2."

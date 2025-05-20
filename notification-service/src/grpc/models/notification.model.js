@@ -1,10 +1,11 @@
 const appMessage = require("@messages/app.message");
 const serverLogger = require("@loggers/server.logger");
-const sendEmail = require("@templates/email.template");
 const responseFormatter = require("@formatters/grpc.response");
 const appConstant = require("@constants/app.constant");
+const sendMailNotification = require("@mailer/app.mailer");
 const { sendVerificationCode, sendSMSNotification, verifyCode } = require("@sms/app.sms");
-
+const emailTemplateHelper = require("@helpers/emailTemplate.helper");
+const SMSTemplateHelper = require("@helpers/smsTemplate.helper");
 
 module.exports = {
     // sendEmailNotification: async (call, callback) => {
@@ -30,21 +31,25 @@ module.exports = {
     // }
     sendEmailNotification: async (call, callback) => {
         try {
-            const { templateKey, user, token, role } = call.request;
-
-            switch (templateKey) {
-                case appConstant.EMAIL_TEMPLATES.RESET_PASSWORD:
-                    await sendEmail.sendForgotPasswordEmail(user, token);
-                    break;
-                case appConstant.EMAIL_TEMPLATES.INVITATION_EMAIL:
-                    await sendEmail.sendInvitationEmail(user, token, role);
-                    break;
-                case appConstant.EMAIL_TEMPLATES.RESET_PASSWORD_CONFIRMATION:
-                    await sendEmail.sendResetPasswordConfirmation(user);
-                    break;
-                default:
-                    return responseFormatter.handleInvalidArgument(call, callback, appMessage.notification.templateInvalid);
+            const { user, templateName, templateVariables } = call.request;
+            let emailTemplateData = await emailTemplateHelper.retrieve({ templateName: templateName });
+            if (!emailTemplateData) {
+                return responseFormatter.handleInvalidArgument(call, callback, appMessage.notification.templateInvalid);
             }
+
+            let templateHtml = emailTemplateData.template.replace(/####BODY####/g, emailTemplateData.templateBody);
+
+            // Step 2: Replace dynamic placeholders in the combined template
+            for (const { pattern, value } of templateVariables) {
+                if (pattern && value) {
+                    templateHtml = templateHtml.replace(new RegExp(pattern, 'g'), value);
+                }
+            }
+
+            await sendMailNotification(emailTemplateData.sendFrom, [user.email], [], [], emailTemplateData.subject || appConstant.EMAIL_TEMPLATES_SUBJECTS.INVITATION_EMAIL, templateHtml, []);
+
+            // await sendEmail.sendEmail(user, emailTemplateData, templateVariables);
+
             return responseFormatter.handleOk(call, callback, appMessage.user.invitationInfo, { user }, null);
 
         } catch (error) {
@@ -76,7 +81,21 @@ module.exports = {
     },
     sendSMSNotification: async (call, callback) => {
         try {
-            const { phoneNumber, message = 'Hello Narendra bhai ' } = call.request;
+            const { phoneNumber, templateName, templateVariables } = call.request;
+            let smsTemplateData = await SMSTemplateHelper.retrieve({ templateName: templateName });
+            if (!smsTemplateData) {
+                return responseFormatter.handleInvalidArgument(call, callback, appMessage.notification.templateInvalid);
+            }
+
+            let message = smsTemplateData.message;
+
+            // Step 2: Replace dynamic placeholders in the combined template
+            for (const { pattern, value } of templateVariables) {
+                if (pattern && value) {
+                    message = message.replace(new RegExp(pattern, 'g'), value);
+                }
+            }
+
             sendSMSNotification(phoneNumber, message)
                 .then(result => {
                     console.log("✅ SMS SID:", result.sid);

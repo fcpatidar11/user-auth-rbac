@@ -246,14 +246,21 @@ module.exports = {
 
             try {
                 const payload = {
-                    templateKey: appConstant.EMAIL_TEMPLATES.INVITATION_EMAIL,
                     user: data,
-                    token,
-                    role: "admin"
+                    templateName: "Welcome Email",
+                    templateVariables: [
+                        {
+                            pattern: '####USER_NAME####',
+                            value: data.firstName
+                        },
+                        {
+                            pattern: '####PROJECT_NAME####',
+                            value: "EncoreSky"
+                        }
+                    ]
                 };
 
                 const grpcResponse = await notificationConnector.sendEmailNotificationConnector(payload);
-                console.log("Email notification sent:", grpcResponse);
                 if (grpcResponse.code !== 0) {
                     serverLogger.error("Email notification failed via gRPC", null, grpcResponse);
                     return responseFormatter.handleInternal(
@@ -263,7 +270,17 @@ module.exports = {
                     );
                 }
 
-                // const simpleSMS = await notificationConnector.sendSMSNotificationConnector({ phoneNumber: "+917566001435", message: "Hello Encoresky" });
+                const smsPayload = {
+                    phoneNumber: "+917566001435",
+                    templateName: "Welcome SMS",
+                    templateVariables: [
+                        {
+                            pattern: '####USER_NAME####',
+                            value: data.firstName
+                        }
+                    ]
+                };
+                const simpleSMS = await notificationConnector.sendSMSNotificationConnector(smsPayload);
                 // const sendOTP = await notificationConnector.sendSMSVerificationCodeConnector({ phoneNumber: "+917566001435" });
                 // const verifyOTP = await notificationConnector.verifyOTPCodeConnector({ phoneNumber: "+917566001435", code: '810553' });
 

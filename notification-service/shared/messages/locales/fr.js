@@ -235,7 +235,11 @@ module.exports = {
 			"contactId": "L'identifiant de contact est obligatoire",
 			"templateKey": "La clé du modèle est requise pour l'envoi de l'email.",
 			"jwtToken": "Le token est requis pour l'envoi de l'email.",
-			"role": "Le rôle est requis pour l'envoi de l'email."
+			"role": "Le rôle est requis pour l'envoi de l'email.",
+			"templateName": "Le nom du modèle est requis.",
+			"templateVariables": "Les variables de modèle sont requises.",
+			"templateVariables.*.pattern": "Le modèle de variable est requis.",
+			"templateVariables.*.value": "La valeur de la variable est requise.",
 		},
 		"string": {
 			"email": "L'e-mail doit être une chaîne de caractères.",
@@ -273,7 +277,11 @@ module.exports = {
 			"contactId": "L'identifiant de contact doit être une chaîne.",
 			"templateKey": "La clé de modèle doit être une chaîne de caractères.",
 			"jwtToken": "Le token doit être une chaîne de caractères.",
-			"role": "Le rôle doit être une chaîne de caractères."
+			"role": "Le rôle doit être une chaîne de caractères.",
+			"templateName": "Le nom du modèle doit être une chaîne de caractères.",
+			"templateVariables.*.pattern": "Le modèle de variable doit être une chaîne de caractères.",
+			"templateVariables.*.value": "La valeur de la variable doit être une chaîne de caractères.",
+
 		},
 		"numeric": {
 			"locationLongitude": "La longitude du lieu doit être numérique.",
@@ -295,7 +303,8 @@ module.exports = {
 			"relationshipPermissions": "Les autorisations relationnelles doivent être un tableau.",
 			"assignRoles": "Les rôles à attribuer doivent être un tableau.",
 			"removeRoles": "Les rôles à supprimer doivent être un tableau.",
-			"locationCoordinates": "Les coordonnées doivent être un tableau."
+			"locationCoordinates": "Les coordonnées doivent être un tableau.",
+			"templateVariables": "Les variables de modèle doivent être un tableau.",
 		},
 		"length": {
 			"coordinates": "La taille des coordonnées doit être égale à 2."

@@ -31,6 +31,7 @@
     "@grpc/grpc-js": "^1.12.6",
     "@grpc/proto-loader": "^0.7.13",
     "@sendgrid/mail": "^8.1.5",
+    "aws-sdk": "^2.1692.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "fs": "^0.0.1-security",

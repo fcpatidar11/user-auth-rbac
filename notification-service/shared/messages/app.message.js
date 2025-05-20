@@ -236,6 +236,10 @@ module.exports = {
             "templateKey": "validation.required.templateKey",
             "jwtToken": "validation.required.jwtToken",
             "role": "validation.required.role",
+            "templateName": "validation.required.templateName",
+            "templateVariables": "validation.required.templateVariables",
+            "templateVariablePattern": "validation.required.templateVariablePattern",
+            "templateVariableValue": "validation.required.templateVariableValue",
         },
         "string": {
             "email": "validation.string.email",
@@ -274,6 +278,9 @@ module.exports = {
             "templateKey": "validation.string.templateKey",
             "jwtToken": "validation.string.jwtToken",
             "role": "validation.string.role",
+            "templateName": "validation.string.templateName",
+            "templateVariablePattern": "validation.string.templateVariablePattern",
+            "templateVariableValue": "validation.string.templateVariableValue",
         },
         "numeric": {
             "locationLongitude": "validation.numeric.locationLongitude",
@@ -295,7 +302,8 @@ module.exports = {
             "relationshipPermissions": "validation.array.relationshipPermissions",
             "assignRoles": "validation.array.assignRoles",
             "removeRoles": "validation.array.removeRoles",
-            "locationCoordinates": "validation.array.locationCoordinates"
+            "locationCoordinates": "validation.array.locationCoordinates",
+            "templateVariables": "validation.array.templateVariables",
         },
         "length": {
             "coordinates": "validation.length.coordinates"

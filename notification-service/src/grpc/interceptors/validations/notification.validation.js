@@ -7,98 +7,41 @@ const appConstant = require("@constants/app.constant");
 module.exports = {
     sendEmailNotification: (method) => async (call, callback) => {
         try {
-            const { templateKey } = call.request;
-
-            // Base validation for templateKey
-            const baseValidator = new Validator(call.request, {
-                templateKey: "required|string"
+            const validator = new Validator(call.request, {
+                "user.firstName": "required|string",
+                "user.email": "required|string|email",
+                "user.lastName": "required|string",
+                "templateName": "required|string",
+                "templateVariables": "required|array",
+                "templateVariables.*.pattern": "required|string",
+                "templateVariables.*.value": "required|string"
             }, {
-                "templateKey.required": appMessage.validation.required.templateKey,
-                "templateKey.string": appMessage.validation.string.templateKey
+                "user.firstName.required": appMessage.validation.required.firstName,
+                "user.firstName.string": appMessage.validation.string.firstName,
+                "user.email.required": appMessage.validation.required.email,
+                "user.email.string": appMessage.validation.string.email,
+                "user.email.email": appMessage.validation.common.emailInvalid,
+                "user.lastName.required": appMessage.validation.required.lastName,
+                "user.lastName.string": appMessage.validation.string.lastName,
+                "templateName.required": appMessage.validation.required.templateName,
+                "templateName.string": appMessage.validation.string.templateName,
+                "templateVariables.required": appMessage.validation.required.templateVariables,
+                "templateVariables.array": appMessage.validation.string.templateVariables,
+                "templateVariables.*.pattern.required": appMessage.validation.required.templateVariablePattern,
+                "templateVariables.*.pattern.string": appMessage.validation.string.templateVariablePattern,
+                "templateVariables.*.value.required": appMessage.validation.required.templateVariableValue,
+                "templateVariables.*.value.string": appMessage.validation.string.templateVariableValue
             });
 
-            const isBaseValid = await baseValidator.check();
-            if (!isBaseValid) {
-                const message = getFirstErrorMessage(baseValidator);
+            const matched = await validator.check();
+            if (!matched) {
+                const message = getFirstErrorMessage(validator);
                 return responseFormatter.handleFailedPrecondition(call, callback, message);
             }
 
-            // Conditional validation based on templateKey
-            if (templateKey === appConstant.EMAIL_TEMPLATES.RESET_PASSWORD) {
-                const validator = new Validator(call.request, {
-                    "user.email": "required|string|email",
-                    "user.firstName": "required|string",
-                    "user.lastName": "required|string",
-                    token: "required|string"
-                }, {
-                    "user.email.required": appMessage.validation.required.email,
-                    "user.email.string": appMessage.validation.string.email,
-                    "user.email.email": appMessage.validation.common.emailInvalid,
-                    "user.firstName.required": appMessage.validation.required.firstName,
-                    "user.firstName.string": appMessage.validation.string.firstName,
-                    "user.lastName.required": appMessage.validation.required.lastName,
-                    "user.lastName.string": appMessage.validation.string.lastName,
-                    "token.required": appMessage.validation.required.jwtToken,
-                    "token.string": appMessage.validation.string.jwtToken,
-                });
-                const matched = await validator.check();
-                if (!matched) {
-                    const message = getFirstErrorMessage(validator);
-                    return responseFormatter.handleFailedPrecondition(call, callback, message);
-                }
-
-            } else if (templateKey === appConstant.EMAIL_TEMPLATES.INVITATION_EMAIL) {
-                const validator = new Validator(call.request, {
-                    "user.email": "required|string|email",
-                    "user.firstName": "required|string",
-                    "user.lastName": "required|string",
-                    token: "required|string",
-                    role: "required|string"
-                }, {
-                    "user.email.required": appMessage.validation.required.email,
-                    "user.email.string": appMessage.validation.string.email,
-                    "user.email.email": appMessage.validation.common.emailInvalid,
-                    "user.firstName.required": appMessage.validation.required.firstName,
-                    "user.firstName.string": appMessage.validation.string.firstName,
-                    "user.lastName.required": appMessage.validation.required.lastName,
-                    "user.lastName.string": appMessage.validation.string.lastName,
-                    "token.required": appMessage.validation.required.jwtToken,
-                    "token.string": appMessage.validation.string.jwtToken,
-                    "role.required": appMessage.validation.required.role,
-                    "role.string": appMessage.validation.string.role
-                });
-                const matched = await validator.check();
-                if (!matched) {
-                    const message = getFirstErrorMessage(validator);
-                    return responseFormatter.handleFailedPrecondition(call, callback, message);
-                }
-
-            } else if (templateKey === appConstant.EMAIL_TEMPLATES.RESET_PASSWORD_CONFIRMATION) {
-                const validator = new Validator(call.request, {
-                    "user.email": "required|string|email",
-                    "user.firstName": "required|string",
-                    "user.lastName": "required|string",
-                }, {
-                    "user.email.required": appMessage.validation.required.email,
-                    "user.email.string": appMessage.validation.string.email,
-                    "user.email.email": appMessage.validation.common.emailInvalid,
-                    "user.firstName.required": appMessage.validation.required.firstName,
-                    "user.firstName.string": appMessage.validation.string.firstName,
-                    "user.lastName.required": appMessage.validation.required.lastName,
-                    "user.lastName.string": appMessage.validation.string.lastName,
-                });
-                const matched = await validator.check();
-                if (!matched) {
-                    const message = getFirstErrorMessage(validator);
-                    return responseFormatter.handleFailedPrecondition(call, callback, message);
-                }
-
-            } else {
-                return responseFormatter.handleInvalidArgument(call, callback, appMessage.notification.templateInvalid);
-            }
-
-            // If all validations pass, proceed
+            // All validations passed
             return method(call, callback);
+
         } catch (error) {
             return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error || "Validation error.");
         }
@@ -123,23 +66,34 @@ module.exports = {
     },
     sendSMSNotification: (method) => async (call, callback) => {
         try {
-            const bodyValidator = new Validator(call.request, {
+            const validator = new Validator(call.request, {
                 "phoneNumber": "required|string",
-                "message": "required|string"
+                "templateName": "required|string",
+                "templateVariables": "required|array",
+                "templateVariables.*.pattern": "required|string",
+                "templateVariables.*.value": "required|string"
             }, {
                 "phoneNumber.required": appMessage.validation.required.phoneNumber,
                 "phoneNumber.string": appMessage.validation.string.phoneNumber,
-                "message.required": appMessage.validation.required.firstName,
-                "message.string": appMessage.validation.string.firstName
+                "templateName.required": appMessage.validation.required.templateName,
+                "templateName.string": appMessage.validation.string.templateName,
+                "templateVariables.required": appMessage.validation.required.templateVariables,
+                "templateVariables.array": appMessage.validation.string.templateVariables,
+                "templateVariables.*.pattern.required": appMessage.validation.required.templateVariablePattern,
+                "templateVariables.*.pattern.string": appMessage.validation.string.templateVariablePattern,
+                "templateVariables.*.value.required": appMessage.validation.required.templateVariableValue,
+                "templateVariables.*.value.string": appMessage.validation.string.templateVariableValue
             });
-            const matchedBody = await bodyValidator.check();
-            if (!matchedBody) {
-                const message = getFirstErrorMessage(bodyValidator);
+
+            const matched = await validator.check();
+            if (!matched) {
+                const message = getFirstErrorMessage(validator);
                 return responseFormatter.handleFailedPrecondition(call, callback, message);
             }
+
             return method(call, callback);
         } catch (error) {
-            return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error);
+            return responseFormatter.handleFailedPrecondition(call, callback, appMessage.common.error || "Validation error.");
         }
     },
     verifyOTPCode: (method) => async (call, callback) => {

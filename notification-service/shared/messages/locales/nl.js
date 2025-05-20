@@ -235,7 +235,11 @@ module.exports = {
 			"contactId": "ContactId is verplicht",
 			"templateKey": "Template sleutel is vereist voor e-mail verzending.",
 			"jwtToken": "Token is vereist voor e-mail verzending.",
-			"role": "Rol is vereist voor e-mail verzending."
+			"role": "Rol is vereist voor e-mail verzending.",
+			"templateName": "Sjabloonnaam is vereist voor e-mail verzending.",
+			"templateVariables": "Sjabloonvariabelen zijn vereist voor e-mail verzending.",
+			"templateVariables.*.pattern": "Sjabloonvariabele patroon is vereist voor e-mail verzending.",
+			"templateVariables.*.value": "Sjabloonvariabele waarde is vereist voor e-mail verzending.",
 		},
 		"string": {
 			"email": "E-mail moet een tekst zijn.",
@@ -273,7 +277,10 @@ module.exports = {
 			"contactId": "ContactId moet een string zijn.",
 			"templateKey": "Sjabloonsleutel moet een string zijn.",
 			"jwtToken": "Token moet een string zijn.",
-			"role": "Rol moet een string zijn."
+			"role": "Rol moet een string zijn.",
+			"templateName": "Sjabloonnaam moet een string zijn.",
+			"templateVariables.*.pattern": "Sjabloonvariabele patroon moet een string zijn.",
+			"templateVariables.*.value": "Sjabloonvariabele waarde moet een string zijn.",
 		},
 		"numeric": {
 			"locationLongitude": "Der Längengrad des Standorts muss numerisch sein.",
@@ -295,7 +302,8 @@ module.exports = {
 			"relationshipPermissions": "Relatiemachtigingen moeten een array zijn.",
 			"assignRoles": "Toewijzen van rollen moet een array zijn.",
 			"removeRoles": "Verwijderen van rollen moet een array zijn.",
-			"locationCoordinates": "Coördinaten moeten een array zijn."
+			"locationCoordinates": "Coördinaten moeten een array zijn.",
+			"templateVariables": "Sjabloonvariabelen moeten een array zijn.",
 		},
 		"length": {
 			"coordinates": "coördinatengrootte moet gelijk zijn aan 2."

@@ -235,7 +235,11 @@ module.exports = {
 			"contactId": "Kontakt-ID erforderlich",
 			"templateKey": "Vorlagenschlüssel ist erforderlich, um eine E-Mail zu senden.",
 			"jwtToken": "Token ist erforderlich, um eine E-Mail zu senden.",
-			"role": "Rolle ist erforderlich, um eine E-Mail zu senden."
+			"role": "Rolle ist erforderlich, um eine E-Mail zu senden.",
+			"templateName": "Vorlagenname ist erforderlich.",
+			"templateVariables": "Vorlagenvariablen sind erforderlich.",
+			"templateVariablePattern": "Vorlagenvariablenmuster ist erforderlich.",
+			"templateVariableValue": "Vorlagenvariablenwert ist erforderlich.",
 		},
 		"string": {
 			"email": "E-Mail muss ein String sein.",
@@ -273,7 +277,10 @@ module.exports = {
 			"contactId": "Kontakt-ID muss eine Zeichenfolge sein.",
 			"templateKey": "Der Template-Schlüssel muss eine Zeichenkette sein.",
 			"jwtToken": "Das Token muss eine Zeichenkette sein.",
-			"role": "Die Rolle muss eine Zeichenkette sein."
+			"role": "Die Rolle muss eine Zeichenkette sein.",
+			"templateName": "Vorlagenname muss eine Zeichenkette sein.",
+			"templateVariablePattern": "Vorlagenvariablenmuster muss eine Zeichenfolge sein.",
+			"templateVariableValue": "Vorlagenvariablenwert muss eine Zeichenfolge sein.",
 		},
 		"numeric": {
 			"locationLongitude": "Der Längengrad des Standorts muss numerisch sein.",
@@ -295,7 +302,8 @@ module.exports = {
 			"relationshipPermissions": "Beziehungsberechtigungen müssen ein Array sein.",
 			"assignRoles": "Zuzuweisende Rollen müssen ein Array sein.",
 			"removeRoles": "Zu entfernende Rollen müssen ein Array sein.",
-			"locationCoordinates": "Koordinaten müssen ein Array sein."
+			"locationCoordinates": "Koordinaten müssen ein Array sein.",
+			"templateVariables": "Vorlagenvariablen müssen ein Array sein.",
 		},
 		"length": {
 			"coordinates": "Koordinatengröße muss gleich 2 sein."
