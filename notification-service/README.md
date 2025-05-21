@@ -110,7 +110,7 @@ cp .env.example .env
 4. Start the service:
 
 ```bash
-npm start
+npm run start:local
 ```
 
 ## API Documentation
@@ -172,6 +172,36 @@ const pushRequest = {
 };
 
 notificationService.sendPushNotification(pushRequest);
+```
+
+### Sending an SMS Notification
+
+```javascript
+const notificationService = require("./notification-service");
+
+// Regular SMS notification
+const smsRequest = {
+  phoneNumber: "+1234567890",
+  templateName: "welcome_sms",
+  templateVariables: [{ pattern: "{{name}}", value: "John Doe" }],
+};
+
+notificationService.sendSMSNotification(smsRequest);
+
+// Sending OTP/Verification Code
+const otpRequest = {
+  phoneNumber: "+1234567890",
+};
+
+notificationService.sendVerificationCode(otpRequest);
+
+// Verifying OTP Code
+const verifyRequest = {
+  phoneNumber: "+1234567890",
+  code: "123456",
+};
+
+notificationService.verifyOTPCode(verifyRequest);
 ```
 
 ## Error Handling
