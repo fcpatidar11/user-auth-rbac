@@ -3,7 +3,7 @@ const sgMail = require("@sendgrid/mail");
 const AWS = require("aws-sdk");
 const appConfig = require("@configs/app.config");
 const serverLogger = require("@loggers/server.logger");
-
+const OneSignal = require('@onesignal/node-onesignal');
 // Shared message builder
 const buildMessage = (sendFrom, recipients, cc, bcc, subject, html, attachments) => {
     return {
@@ -78,6 +78,39 @@ const sendViaSMTP = async (message) => {
     return info;
 };
 
+// Send via OneSignal
+const sendViaOneSignal = async (recipients, subject, html) => {
+    if (!appConfig.ONESIGNAL_APP_ID || !appConfig.ONESIGNAL_API_KEY) return null;
+
+    try {
+        const configuration = OneSignal.createConfiguration({
+            authMethods: {
+                app_key: {
+                    tokenProvider: {
+                        getToken: () => appConfig.ONESIGNAL_API_KEY
+                    }
+                }
+            }
+        });
+
+        const client = new OneSignal.DefaultApi(configuration);
+
+        const notification = {
+            app_id: appConfig.ONESIGNAL_APP_ID,
+            include_email_tokens: Array.isArray(recipients) ? recipients : [recipients],
+            email_subject: subject,
+            email_body: html
+        };
+
+        const response = await client.createNotification(notification);
+        serverLogger.info(`Email sent via OneSignal: ${response.id || 'No ID'}`);
+        return response;
+    } catch (error) {
+        serverLogger.error(`OneSignal error: ${error.message}`, null, error);
+        return null;
+    }
+};
+
 // Send via Gmail
 const sendViaGmail = async (message) => {
     if (!appConfig.GMAIL_USER || !appConfig.GMAIL_PASSWORD) return null;
@@ -104,6 +137,7 @@ const sendMailNotification = async (sendFrom, recipients, cc = [], bcc = [], sub
             () => sendViaSendGrid(message),
             () => sendViaSMTP(message),
             () => sendViaSES(sendFrom, recipients, cc, bcc, subject, html),
+            () => sendViaOneSignal(recipients, subject, html),
             () => sendViaGmail(message)
         ];
 

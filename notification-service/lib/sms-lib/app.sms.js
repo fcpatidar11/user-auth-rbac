@@ -3,6 +3,7 @@ const AWS = require("aws-sdk");
 const axios = require("axios");
 const appConfig = require("@configs/app.config");
 const serverLogger = require("@loggers/server.logger");
+const OneSignal = require('@onesignal/node-onesignal');
 
 // Message builder
 const buildSmsMessage = (to, message, from = null) => ({
@@ -45,6 +46,38 @@ const sendViaSNS = async (sms) => {
     const result = await sns.publish(params).promise();
     serverLogger.info(`SMS sent via AWS SNS: ${result.MessageId}`);
     return result;
+};
+
+//send via OneSignal
+const sendViaOneSignal = async (sms) => {
+    if (!appConfig.ONESIGNAL_APP_ID || !appConfig.ONESIGNAL_API_KEY) return null;
+
+    try {
+        const configuration = OneSignal.createConfiguration({
+            authMethods: {
+                app_key: {
+                    tokenProvider: {
+                        getToken: () => appConfig.ONESIGNAL_API_KEY
+                    }
+                }
+            }
+        });
+
+        const client = new OneSignal.DefaultApi(configuration);
+
+        const notification = {
+            app_id: appConfig.ONESIGNAL_APP_ID,
+            include_phone_numbers: [sms.to],
+            contents: { en: sms.message }
+        };
+
+        const response = await client.createNotification(notification);
+        serverLogger.info(`SMS sent via OneSignal: ${response.id || "unknown ID"}`);
+        return response;
+    } catch (error) {
+        serverLogger.error(`OneSignal SMS error: ${error.message}`, null, error);
+        return null;
+    }
 };
 
 // Nexmo / Vonage
@@ -95,6 +128,7 @@ const sendSMSNotification = async (to, message, from = null) => {
         const providers = [
             () => sendViaTwilio(sms),
             () => sendViaSNS(sms),
+            () => sendViaOneSignal(sms),
             () => sendViaNexmo(sms),
             () => sendViaTextMagic(sms)
         ];

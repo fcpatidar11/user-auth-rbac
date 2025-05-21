@@ -1,10 +1,10 @@
-const axios = require("axios");
 const AWS = require("aws-sdk");
 const admin = require("firebase-admin"); // FCM
 const { Expo } = require('expo-server-sdk'); // Expo
 const appConfig = require("@configs/app.config");
 const serverLogger = require("@loggers/server.logger");
 const path = require("path");
+const OneSignal = require('@onesignal/node-onesignal');
 
 // Push message builder
 const buildPushMessage = (deviceToken, title, body, data = {}) => ({
@@ -54,26 +54,32 @@ const sendViaFCM = async (push) => {
 const sendViaOneSignal = async (push) => {
     if (!appConfig.ONESIGNAL_APP_ID || !appConfig.ONESIGNAL_API_KEY) return null;
 
-    const payload = {
-        app_id: appConfig.ONESIGNAL_APP_ID,
-        include_player_ids: [push.deviceToken],
-        headings: { en: push.title },
-        contents: { en: push.body },
-        data: push.data
-    };
-
     try {
-        const result = await axios.post("https://onesignal.com/api/v1/notifications", payload, {
-            headers: {
-                Authorization: `Basic ${appConfig.ONESIGNAL_API_KEY}`,
-                "Content-Type": "application/json"
+        const configuration = OneSignal.createConfiguration({
+            authMethods: {
+                app_key: {
+                    tokenProvider: {
+                        getToken: () => appConfig.ONESIGNAL_API_KEY
+                    }
+                }
             }
         });
 
-        serverLogger.info(`Push sent via OneSignal: ${result.data.id}`);
-        return result.data;
-    } catch (err) {
-        serverLogger.error("OneSignal Push Error:", err);
+        const client = new OneSignal.DefaultApi(configuration);
+
+        const notification = {
+            app_id: appConfig.ONESIGNAL_APP_ID,
+            include_player_ids: [push.deviceToken],
+            headings: { en: push.title },
+            contents: { en: push.body },
+            data: push.data
+        };
+
+        const response = await client.createNotification(notification);
+        serverLogger.info(`Push sent via OneSignal: ${response.id || 'No ID'}`);
+        return response;
+    } catch (error) {
+        serverLogger.error(`OneSignal Push Error: ${error.message}`, null, error);
         return null;
     }
 };
