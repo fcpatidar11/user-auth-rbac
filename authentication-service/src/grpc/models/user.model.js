@@ -202,30 +202,6 @@ module.exports = {
                 return responseFormatter.handleNotFound(call, callback, appMessage.user.notFound);
             }
 
-            const token = await jwtUtil.generateInvitationVerificationToken({ userId: data._id, email: data.email })
-
-            try {
-                const payload = {
-                    templateKey: appConstant.EMAIL_TEMPLATES.INVITATION_EMAIL,
-                    user: data,
-                    token,
-                    role: "admin"
-                };
-
-                const grpcResponse = await notificationConnector.sendEmailNotificationConnector(payload);
-                console.log("Email notification sent:", grpcResponse);
-                if (grpcResponse.code !== 0) {
-                    serverLogger.error("Email notification failed via gRPC", null, grpcResponse);
-                    return responseFormatter.handleInternal(
-                        call,
-                        callback,
-                        grpcResponse.details
-                    );
-                }
-            } catch (error) {
-                serverLogger.error("Failed to send email notification", null, error);
-                return responseFormatter.handleInternal(call, callback, 'Failed to send email');
-            }
             return responseFormatter.handleOk(call, callback, appMessage.user.fetch, { data }, null);
         } catch (error) {
             serverLogger.error(appMessage.user.notFound, null, error);
@@ -246,7 +222,7 @@ module.exports = {
 
             try {
                 const payload = {
-                    user: data,
+                    email: data.email,
                     templateName: "Welcome Email",
                     templateVariables: [
                         {

@@ -21,7 +21,7 @@ message ReplacePattern {
 }
 
 message SendEmailNotificationRequest {
-  UserInfo user = 1;
+  string email = 1;
   string templateName = 2;
   repeated ReplacePattern templateVariables = 3; 
 }

@@ -8,21 +8,15 @@ module.exports = {
     sendEmailNotification: (method) => async (call, callback) => {
         try {
             const validator = new Validator(call.request, {
-                "user.firstName": "required|string",
-                "user.email": "required|string|email",
-                "user.lastName": "required|string",
+                "email": "required|string|email",
                 "templateName": "required|string",
                 "templateVariables": "required|array",
                 "templateVariables.*.pattern": "required|string",
                 "templateVariables.*.value": "required|string"
             }, {
-                "user.firstName.required": appMessage.validation.required.firstName,
-                "user.firstName.string": appMessage.validation.string.firstName,
-                "user.email.required": appMessage.validation.required.email,
-                "user.email.string": appMessage.validation.string.email,
-                "user.email.email": appMessage.validation.common.emailInvalid,
-                "user.lastName.required": appMessage.validation.required.lastName,
-                "user.lastName.string": appMessage.validation.string.lastName,
+                "email.required": appMessage.validation.required.email,
+                "email.string": appMessage.validation.string.email,
+                "email.email": appMessage.validation.common.emailInvalid,
                 "templateName.required": appMessage.validation.required.templateName,
                 "templateName.string": appMessage.validation.string.templateName,
                 "templateVariables.required": appMessage.validation.required.templateVariables,
